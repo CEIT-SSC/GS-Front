@@ -1,7 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const Home = () => (
-    <h1>This is Home Page</h1>
-);
+import { MainContainer } from './HomeStyle';
+
+const Home = (props) => {
+    
+    return(
+    <>
+        <MainContainer>
+        </MainContainer>
+    </>
+)};
 
 export default Home;
