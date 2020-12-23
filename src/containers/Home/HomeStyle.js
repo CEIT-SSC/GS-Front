@@ -18,12 +18,13 @@ export const GuiContainer = styled.div`
     height:100vh;
     justify-content:center;
     align-items:center;
-    background-color: rgba(100,100,100,0.6);
+    backdrop-filter: blur(2px);
+    background-color: rgba(0,0,0,0.3);
 `
 
 export const Gui = styled.div `
     width:50%;
-    height:100vh;
+    height:90%;
     border-radius:5%;
     background-color:white;
 `
