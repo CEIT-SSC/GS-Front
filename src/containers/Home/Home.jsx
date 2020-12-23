@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import Toggle from '../../components/UI/switch/ToggleSwitchComp';
-import { MainContainer } from './HomeStyle';
-import {GuiContainer} from './GuiStyle';
+import Toggle from '../../components/UI/switch/ToggleSwitch';
+import { MainContainer , GuiContainer , Gui } from './HomeStyle';
+
 
 const Home = (props) => {
     
@@ -11,10 +11,9 @@ const Home = (props) => {
     return(
     <>  
         <MainContainer>
-        <Toggle style={{zIndex:'9999' , position:'absolute'}} checked={showGui} onCheck={() => setShowGui(!showGui)}></Toggle>
-        {/* <h1 style={{display: showGui ? 'block' : 'none'}}> I'm showing Gui</h1> */}
+        <Toggle checked={showGui} onCheck={() => setShowGui(!showGui)}></Toggle>
         <GuiContainer showGui={showGui}>
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            <Gui></Gui>
         </GuiContainer>
         </MainContainer>
     </>

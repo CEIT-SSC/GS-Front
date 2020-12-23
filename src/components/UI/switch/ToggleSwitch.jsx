@@ -1,13 +1,11 @@
-import React, {useState} from 'react';
-import TpggleSwitch from 'react-switch';
+import React from 'react';
+import {ToggleSwitch} from './ToggleStyle';
 
-const ToggleSwitchComp = (props) => {
-    
-    // const [checked, onCheck] = useState(props.checked);
+const Toggle = (props) => {
     
     return (
         <>
-          <TpggleSwitch 
+          <ToggleSwitch 
             onChange={() => props.onCheck()} 
             checked={props.checked}
             handleDiameter={20}
@@ -21,4 +19,4 @@ const ToggleSwitchComp = (props) => {
     )
 }
 
-export default ToggleSwitchComp;
+export default Toggle;
