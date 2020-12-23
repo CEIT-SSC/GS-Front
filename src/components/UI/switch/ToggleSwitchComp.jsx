@@ -3,13 +3,13 @@ import TpggleSwitch from 'react-switch';
 
 const ToggleSwitchComp = (props) => {
     
-    const [checked, onCheck] = useState(false);
+    // const [checked, onCheck] = useState(props.checked);
     
     return (
         <>
           <TpggleSwitch 
-            onChange={() => onCheck} 
-            checked={checked}
+            onChange={() => props.onCheck()} 
+            checked={props.checked}
             handleDiameter={20}
             offColor="#08f"
             onColor="#0ff"
