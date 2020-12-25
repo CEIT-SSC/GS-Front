@@ -3,7 +3,7 @@ import * as actions from '../actions/actionTypes';
 const initialState ={
     jokes:null,
     success:false,
-    err:null
+    error:null
 }
 
 

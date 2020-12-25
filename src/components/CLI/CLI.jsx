@@ -12,8 +12,9 @@ const CLI = props => {
     const [file, setFile] = useState(null);
     const upFileSuc = useSelector((state) => state.fileUploader.success);
     const upFileErr = useSelector((state) => state.fileUploader.error);
-    const jokesToShow = useSelector((state) => state.fetchJokes.jokes);
-    const jokesErr = useSelector((state) => state.fetchJokes.error);
+    const jokesToShow = useSelector((state) => state.jokeFethch.jokes);
+    const jokesSuccess = useSelector((state) => state.jokeFethch.success);
+    const jokesErr = useSelector((state) => state.jokeFethch.error);
 
     const dispatch=useDispatch();
 
@@ -48,7 +49,7 @@ const CLI = props => {
         if(jokesToShow != null){
             terminal.current.pushToStdout(jokesToShow);
         }
-    },[jokesToShow])
+    },[jokesSuccess])
 
 
     useEffect(() => {

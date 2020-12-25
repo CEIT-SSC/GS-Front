@@ -10,7 +10,8 @@ export const jokesFetchStart = () => {
 
 export const jokesFetchSuccess = (jokes) => {
     return {
-        type: actions.FETCH_JOKES_SUCCESS
+        type: actions.FETCH_JOKES_SUCCESS,
+        jokes
     }
 }
 
@@ -30,8 +31,8 @@ export const fetchJokes = (arg) => {
                 const jokes = response.data.value.map(el => el.joke + "\n");
                 dispatch(jokesFetchSuccess(jokes));
             }
-            catch (err) {
-                dispatch(jokesFetchFailure(err))
+            catch (error) {
+                dispatch(jokesFetchFailure(error))
             }
         }
         sendReq();
