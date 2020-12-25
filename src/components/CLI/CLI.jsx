@@ -1,56 +1,85 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch , useSelector } from 'react-redux';
 import Terminal from 'react-console-emulator';
-import axios from 'axios';
+
+
+import * as fileActions from '../../store/actions/fileUploader';
+import * as jokeActions from '../../store/actions/fetchJokes';
 
 const CLI = props => {
     const terminal = React.createRef();
     const inputRef = React.createRef();
     const [file, setFile] = useState(null);
+    const upFileSuc = useSelector((state) => state.fileUploader.success);
+    const upFileErr = useSelector((state) => state.fileUploader.error);
+    const jokesToShow = useSelector((state) => state.fetchJokes.jokes);
+    const jokesErr = useSelector((state) => state.fetchJokes.error);
+
+    const dispatch=useDispatch();
 
     const commands = {
+        /**
+         * fetch a number of random jokes and print them
+         */
         jokes: {
             description: 'shows random number of jokes',
             usage: 'jokes <number>',
             fn: function (arg) {
-                const sendReq = async () => {
-                    try {
-                        const response = await axios.get("http://api.icndb.com/jokes/random/" + arg);
-                        terminal.current.pushToStdout(response.data.value.map(el => el.joke + "\n"));
-                    }
-                    catch (err) {
-                        terminal.current.pushToStdout(err.message);
-                    }
-                }
-                sendReq();
-                return `${"wait.."}`
+                dispatch(jokeActions.fetchJokes(arg));
             }
         },
-
+        /**
+         * open a file selector to upload files
+         */
         file: {
             description: 'uploads a file to the local server',
             usage: 'file',
             fn: function (arg) {
                 setFile(null);
                 inputRef.current.click();
+
             }
         }
     }
+    /**
+     * print the fetched jokes, or the error message if unsuccessful
+     */
+    useEffect(() => {
+        if(jokesToShow != null){
+            terminal.current.pushToStdout(jokesToShow);
+        }
+    },[jokesToShow])
+
 
     useEffect(() => {
-        if (file != null) {
-            const data = new FormData()
-            for (let el in file) {
-                data.append('files', file[el]);
-            }
-            axios.post("http://localhost:5000/files", data, { // receive two parameter endpoint url ,form data 
-            })
-                .then(res => { // then print response status
-                    console.log(res.status)
-                    terminal.current.pushToStdout("success");
-                })
-                .catch(err => { console.log(err) })
+        if(jokesErr != null){
+            terminal.current.pushToStdout(jokesErr.message);
         }
+    },[jokesErr])
+
+    /**
+     * upload files and show the result
+     */
+    useEffect(() => {
+        if (file != null) {
+            dispatch(fileActions.uploadFile(file));
+            setFile(null);
+        }
+        
     }, [file])
+
+    useEffect(() => {
+        if(upFileSuc){
+            terminal.current.pushToStdout("successful");
+        }
+    }, [upFileSuc])
+
+    useEffect(() => {
+        if(upFileErr != null){
+            terminal.current.pushToStdout(upFileErr.message);
+        }
+    }, [upFileErr])
+
 
 
 
