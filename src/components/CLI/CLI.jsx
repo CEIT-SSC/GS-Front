@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch , useSelector } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import Terminal from 'react-console-emulator';
 
 
-import * as fileActions from '../../store/actions/fileUploader';
-import * as jokeActions from '../../store/actions/fetchJokes';
+import * as actions from '../../store/actions';
 
 const CLI = props => {
     const terminal = React.createRef();
     const inputRef = React.createRef();
     const [file, setFile] = useState(null);
-    const upFileSuc = useSelector((state) => state.fileUploader.success);
-    const upFileErr = useSelector((state) => state.fileUploader.error);
-    const jokesToShow = useSelector((state) => state.jokeFethch.jokes);
-    const jokesSuccess = useSelector((state) => state.jokeFethch.success);
-    const jokesErr = useSelector((state) => state.jokeFethch.error);
+
+    const {upFileSuc, upFileErr, jokesToShow, jokesSuccess, jokesErr} = props;
 
     const dispatch=useDispatch();
 
@@ -26,7 +22,7 @@ const CLI = props => {
             description: 'shows random number of jokes',
             usage: 'jokes <number>',
             fn: function (arg) {
-                dispatch(jokeActions.fetchJokes(arg));
+                dispatch(actions.fetchJokes(arg));
             }
         },
         /**
@@ -63,10 +59,9 @@ const CLI = props => {
      */
     useEffect(() => {
         if (file != null) {
-            dispatch(fileActions.uploadFile(file));
+            dispatch(actions.uploadFile(file));
             setFile(null);
         }
-        
     }, [file])
 
     useEffect(() => {
@@ -102,4 +97,14 @@ const CLI = props => {
     );
 }
 
-export default CLI;
+const mapStateToProps = (state) => {
+    return {
+        upFileSuc : state.fileUploader.success,
+        upFileErr : state.fileUploader.error,
+        jokesToShow : state.jokeFethch.jokes,
+        jokesSuccess : state.jokeFethch.success,
+        jokesErr : state.jokeFethch.error,
+    }
+}
+
+export default connect(mapStateToProps)(CLI);

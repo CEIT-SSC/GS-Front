@@ -1,13 +1,7 @@
-export { 
-    fileUploadStart,
-    fileUploadFailure,
-    fileUploadSuccess,
+export {
     uploadFile
 } from './fileUploader';
 
 export { 
-    fetchJokes,
-    jokesFetchFailure,
-    jokesFetchStart,
-    jokesFetchSuccess
+    fetchJokes
 } from './fetchJokes';
