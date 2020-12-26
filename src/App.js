@@ -1,10 +1,15 @@
 import React from 'react';
-import Home from './containers/Home/Home';
+import { Switch, Route} from 'react-router-dom';
 
+import Home from './containers/Home/Home';
+import AdminLogin from './containers/AdminLogin/AdminLogin';
 
 const App = () => {
   return (
-    <Home />
+    <Switch>
+      <Route path="/" exact component={Home} />
+      <Route path="/login/superadmin" component={AdminLogin} />
+    </Switch>
   );
 }
 
