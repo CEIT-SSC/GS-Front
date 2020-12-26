@@ -5,3 +5,8 @@ export {
 export { 
     fetchJokes
 } from './fetchJokes';
+
+export {
+    authSuperAdmin,
+    logoutSuperAdmin
+} from './superAdminAuth'
