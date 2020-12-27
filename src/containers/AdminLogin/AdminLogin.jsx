@@ -42,7 +42,7 @@ const AdminLogin = props => {
         onAuthUser(userData);
     }
     if (isAuthenticated) {
-        return <Redirect to="/" />
+        return <Redirect to="/panel/superadmin" />
     }
     return (
         <Container>
