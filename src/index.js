@@ -12,11 +12,13 @@ import reportWebVitals from './reportWebVitals';
 import fileUploaderReducer from './store/reducers/fileUploader'; 
 import jokeFetchReducer from './store/reducers/fetchJokes';
 import superAdminAuthReducer from './store/reducers/superAdminAuth';
+import userAdminCRUDReducer from './store/reducers/user-admin-CRUD';
 
 const rootReducer= combineReducers({
   fileUploader:fileUploaderReducer,
   jokeFethch: jokeFetchReducer,
-  superAdminAuth: superAdminAuthReducer
+  superAdminAuth: superAdminAuthReducer,
+  userAdminCRUD: userAdminCRUDReducer
 });
 
 // const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;

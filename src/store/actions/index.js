@@ -10,3 +10,8 @@ export {
     authSuperAdmin,
     logoutSuperAdmin
 } from './superAdminAuth'
+
+export {
+    getUsers,
+    getQAdmins
+} from './user-admin-CRUD';

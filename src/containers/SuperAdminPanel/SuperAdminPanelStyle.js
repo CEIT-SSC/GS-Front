@@ -1,4 +1,3 @@
-import { Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import {Button} from 'react-bootstrap';
 
@@ -9,7 +8,7 @@ export const Container = styled.div`
     justify-content: center;
     background-color: #2a5496;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
 `
 
 export const MainButton  = styled(Button) `
@@ -20,5 +19,6 @@ export const MainButton  = styled(Button) `
     min-height:150px;
     margin: 20px;
     color: #2a5496;
-    
+    font-size: 30px;
+    font-weight: bold;
 `
