@@ -22,3 +22,4 @@ export const MainButton  = styled(Button) `
     font-size: 30px;
     font-weight: bold;
 `
+

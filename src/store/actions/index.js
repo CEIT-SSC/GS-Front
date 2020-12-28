@@ -13,5 +13,9 @@ export {
 
 export {
     getUsers,
-    getQAdmins
+    getQAdmins,
+    addUser,
+    addQAdmin,
+    deleteUser,
+    deleteQAdmin
 } from './user-admin-CRUD';
