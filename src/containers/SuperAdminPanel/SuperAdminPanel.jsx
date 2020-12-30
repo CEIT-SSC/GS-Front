@@ -37,13 +37,16 @@ const SuperAdminPanel = props => {
         return <Redirect to="/login/superadmin" />
     }
 
+    if(showData) {
+        return <Redirect to="/list/superadmin" />
+    }
+
     const handleLogout = (event) => {
         onLogout(token);
     }
 
        
     const inputChangeHandler = (event, index) => {
-        console.log("hiiii");
         const updatedForm = [...formElements];
         const updatedEl = { ...formElements[index] };
         updatedEl.value = event.target.value;
@@ -198,11 +201,6 @@ const SuperAdminPanel = props => {
                     
                         
                 </span>
-                {/* <div>
-                   
-                    
-                </div> */}
-                
 
             </Card>
         ))
@@ -210,9 +208,19 @@ const SuperAdminPanel = props => {
     if (error != null) {
         dataList = <Alert variant={'danger'}> {error.message} </Alert>
     }
+
+    const handleQAdminClick = (event) =>{
+        setShowData(!showData); 
+        dispatch(actions.getQAdmins(token));
+    }
+
+    const handleUserClick = (event) =>{
+        setShowData(!showData); 
+        dispatch(actions.getUsers(token));
+    }
     return (
         <>
-            <Modal
+            {/* <Modal
                 size="lg"
                 show={showData}
                 onHide={() => setShowData(false)}
@@ -229,7 +237,7 @@ const SuperAdminPanel = props => {
                     {showEditForm ? editForm : null}
                     {dataList}
                 </Modal.Body>
-            </Modal>
+            </Modal> */}
             <Container>
                 <Navbar fixed="top" style={{ width: '100%' }}  >
                     <Button
@@ -238,12 +246,14 @@ const SuperAdminPanel = props => {
                         variant="outline-primary">Log Out</Button>
                 </Navbar>
 
-                <MainButton onClick={() => { setShowData(!showData); dispatch(actions.getQAdmins(token)) }}> Question Admins </MainButton>
-                <MainButton onClick={() => { setShowData(!showData); dispatch(actions.getUsers(token)) }}> Users </MainButton>
+                <MainButton onClick={() => { handleQAdminClick() }}> Question Admins </MainButton>
+                <MainButton onClick={() => { handleUserClick()}}> Users </MainButton>
                 <MainButton> Questions  </MainButton>
             </Container>
         </>
     )
+
+    
 }
 
 const mapStateToProps = (state) => ({

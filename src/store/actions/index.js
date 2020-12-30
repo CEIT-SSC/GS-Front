@@ -17,5 +17,7 @@ export {
     addUser,
     addQAdmin,
     deleteUser,
-    deleteQAdmin
+    deleteQAdmin,
+    editQAdmin,
+    editUser
 } from './user-admin-CRUD';

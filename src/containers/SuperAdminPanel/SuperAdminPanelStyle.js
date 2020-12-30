@@ -10,6 +10,13 @@ export const Container = styled.div`
     width: 100%;
     min-height: 100vh;
 `
+export const ListContainer = styled.div`
+    padding : 20px;
+    background-color: white;
+    min-height : 80vh;
+    width : 60%;
+    border-radius: 10px;
+`
 
 export const MainButton  = styled(Button) `
     background-color:white;
@@ -21,5 +28,20 @@ export const MainButton  = styled(Button) `
     color: #2a5496;
     font-size: 30px;
     font-weight: bold;
+`
+
+export const DeleteButton  = styled(Button) `
+    margin-right: 10px;
+    margin-bottom: 5px;
+    right: 0px;
+    background-color: red;
+    border-color: white;
+`
+export const EditButton  = styled(Button) `
+    margin-right: 10px;
+    margin-bottom: 5px;
+    right: 0px;
+    background-color: #eb9834;
+    border-color: white;
 `
 

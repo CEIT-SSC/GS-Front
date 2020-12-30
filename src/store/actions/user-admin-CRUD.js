@@ -55,25 +55,17 @@ export const getQAdmins = (token) => dispatch => {
 }
 
 export const addUser = (token,userData) => dispatch => {
+    console.log("user adding");
     dispatch(userStart());
     axios.post("/user" , userData , {
         headers: {
             Authorization: `Bearer ${token}`
         }
     })
+    .then((response) => {console.log(response) ;getUsers(token)})
     .catch(error => {
-        dispatch(userFail(error));
-    });
-    axios.get("/user", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        dispatch(userSuccess(response.data , 'user'))
-    })
-    .catch(error => {
-        dispatch(userFail(error));
+        console.log(error);
+     dispatch(userFail(error));
     });
 }
 
@@ -84,19 +76,9 @@ export const addQAdmin = (token,userData) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
+    .then((response) => {getQAdmins(token)})
     .catch(error => {
-        dispatch(userFail(error));
-    });
-    axios.get("/questionadmin", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        dispatch(userSuccess(response.data , 'QAdmin'))
-    })
-    .catch(error => {
-        dispatch(userFail(error));
+     dispatch(userFail(error));
     });
 }
 
@@ -107,19 +89,9 @@ export const deleteUser = (token,studentNumber) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
+    .then((response) => {getUsers(token)})
     .catch(error => {
-        dispatch(userFail(error));
-    });
-    axios.get("/user", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        dispatch(userSuccess(response.data , 'user'))
-    })
-    .catch(error => {
-        dispatch(userFail(error));
+     dispatch(userFail(error));
     });
     
 }
@@ -136,5 +108,28 @@ export const deleteQAdmin = (token,username) => dispatch => {
     });
 }
 
+export const editUser = (token,userData) => dispatch => {
+    dispatch(userStart());
+    axios.patch("/user/"+userData.studentNumber ,userData, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }).then((response) => {getUsers(token)})
+    .catch(error => {
+     dispatch(userFail(error));
+    });
+} 
+
+export const editQAdmin = (token,adminData) => dispatch => {
+    dispatch(userStart());
+    axios.patch("/questionadmin/"+adminData.username , adminData , {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }).then((response) => {getQAdmins(token)})
+    .catch(error => {
+     dispatch(userFail(error));
+    });
+}
 
 
