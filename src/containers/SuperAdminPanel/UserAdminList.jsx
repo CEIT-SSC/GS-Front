@@ -1,7 +1,7 @@
 import React, { useState , useEffect } from 'react';
 import { Navbar, Button, Modal, Spinner, Alert, Card , Form , Row, Col} from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-import { useDispatch, connect } from 'react-redux';
+import { Redirect , withRouter} from 'react-router-dom';
+import { useDispatch, connect  } from 'react-redux';
 import {confirmAlert} from 'react-confirm-alert';
 import {FaTrashAlt, FaEdit} from 'react-icons/fa';
 import { Container , ListContainer, DeleteButton, EditButton } from './SuperAdminPanelStyle';
@@ -14,9 +14,10 @@ const UserAdminList = (props) =>{
     const [showForm , setShowForm] = useState(false);
     const [userToEdit, setUserToEdit] = useState(null);
     const { token, data, loading, error, dataType } = props;
-
+    
     const handleBack = (event) =>{
-        // return <Redirect to ="panel/superadmin" />
+        // console.log(props);
+        props.history.replace("/panel/superadmin");
     }
 
     const onAddClick =(event) => {
@@ -106,11 +107,11 @@ const UserAdminList = (props) =>{
 }
 
 const mapStateToProps = (state) => ({
-    token: state.userAdminCRUD.token,
+    token: state.superAdminAuth.token,
     data: state.userAdminCRUD.data,
     dataType: state.userAdminCRUD.dataType,
     loading: state.userAdminCRUD.loading,
     error: state.userAdminCRUD.error,
 })
 
-export default connect(mapStateToProps)(UserAdminList);
+export default connect(mapStateToProps)(withRouter(UserAdminList));

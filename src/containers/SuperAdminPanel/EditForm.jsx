@@ -43,7 +43,8 @@ const EditForm = (props) => {
 
 
     const onSubmitHandler = (event) => {
-        
+        event.preventDefault();
+        console.log(token);
         if( dataType === 'user'){
             if(props.userToEdit === null){
                 const userData = {
@@ -121,7 +122,7 @@ const EditForm = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    token: state.userAdminCRUD.token,
+    token: state.superAdminAuth.token,
     dataType: state.userAdminCRUD.dataType,
     loading: state.userAdminCRUD.loading,
     error: state.userAdminCRUD.error,
