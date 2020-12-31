@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Button} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
     display: flex;
@@ -9,9 +9,13 @@ export const Container = styled.div`
     background-color: #2a5496;
     width: 100%;
     min-height: 100vh;
+    @media(max-width: 768px){
+        flex-direction: column;
+    }
 `
 
-export const MainButton  = styled(Button) `
+export const MainButton  = styled(Link) `
+    text-decoration: none;
     background-color:white;
     width: 300px;
     height : 300px;
@@ -21,4 +25,18 @@ export const MainButton  = styled(Button) `
     color: #2a5496;
     font-size: 30px;
     font-weight: bold;
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    &:hover{
+        text-decoration: none;
+        background-color: #0a1c38;
+        color: white;
+    }
+    @media(max-width: 768px){
+        height: 150px;
+    }
 `
