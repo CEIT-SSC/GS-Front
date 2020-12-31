@@ -62,11 +62,11 @@ export const addUser = (token,userData) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
-    .then((response) => {console.log(response) ;getUsers(token)})
     .catch(error => {
         console.log(error);
      dispatch(userFail(error));
     });
+    dispatch(getUsers(token))
 }
 
 export const addQAdmin = (token,userData) => dispatch => {
@@ -76,10 +76,10 @@ export const addQAdmin = (token,userData) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
-    .then((response) => {getQAdmins(token)})
     .catch(error => {
      dispatch(userFail(error));
     });
+    dispatch(getQAdmins(token))
 }
 
 export const deleteUser = (token,studentNumber) => dispatch => {
@@ -89,10 +89,10 @@ export const deleteUser = (token,studentNumber) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
-    .then((response) => {getUsers(token)})
     .catch(error => {
      dispatch(userFail(error));
     });
+    dispatch(getUsers(token))
     
 }
 export const deleteQAdmin = (token,username) => dispatch => {
@@ -102,34 +102,37 @@ export const deleteQAdmin = (token,username) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
-    .then((response) => {getQAdmins(token)})
     .catch(error => {
      dispatch(userFail(error));
     });
+    dispatch(getQAdmins(token))
 }
 
-export const editUser = (token,userData) => dispatch => {
+export const editUser = (token,userData, studentNumber) => dispatch => {
     dispatch(userStart());
-    axios.patch("/user/"+userData.studentNumber ,userData, {
+    axios.patch("/user/"+ studentNumber ,userData, {
         headers: {
             Authorization: `Bearer ${token}`
         }
-    }).then((response) => {getUsers(token)})
+    })
     .catch(error => {
      dispatch(userFail(error));
     });
+    dispatch(getUsers(token))
 } 
 
-export const editQAdmin = (token,adminData) => dispatch => {
+export const editQAdmin = (token,adminData, username) => dispatch => {
     dispatch(userStart());
-    axios.patch("/questionadmin/"+adminData.username , adminData , {
+
+    axios.patch("/questionadmin/"+ username , adminData , {
         headers: {
             Authorization: `Bearer ${token}`
         }
-    }).then((response) => {getQAdmins(token)})
+    })
     .catch(error => {
      dispatch(userFail(error));
     });
+    dispatch(getQAdmins(token))
 }
 
 
