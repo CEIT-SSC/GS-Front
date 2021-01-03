@@ -7,6 +7,11 @@ export {
 } from './fetchJokes';
 
 export {
+    authUser,
+    logoutUser
+} from './userAuth'
+
+export {
     authSuperAdmin,
     logoutSuperAdmin
 } from './superAdminAuth'

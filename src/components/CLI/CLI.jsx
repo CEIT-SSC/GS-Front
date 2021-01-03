@@ -36,6 +36,18 @@ const CLI = props => {
                 inputRef.current.click();
 
             }
+        },
+        login : {
+            description: 'log i as a user',
+            usage: 'login <studentNumber> <password>',
+            //TODO: define login function
+            fn: function (arg) {
+                const userData = {
+                    studentNumber: arg[0],
+                    password: arg[1]
+                };
+                dispatch(actions.authUser(userData));
+            }
         }
     }
     /**
