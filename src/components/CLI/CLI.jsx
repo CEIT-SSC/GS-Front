@@ -14,6 +14,24 @@ const CLI = props => {
     questions,questionsSuccess,questionsErr } = props;
 
     const dispatch=useDispatch();
+    
+    const getQuestion =(index) =>{
+        if(questions===null){
+            dispatch(actions.fetchQuestions(token));
+        }
+        else if(index <0 || index >=questions.length){
+        terminal.current.pushToStdout("Invalid Index");
+        }
+        else{          
+            const qel=questions[index];
+            terminal.current.pushToStdout(qel.name);
+            terminal.current.pushToStdout(qel.body);
+            qel.examples.map((el, index2) => {
+                terminal.current.pushToStdout("Example "+ (index2+1) +" :");
+                terminal.current.pushToStdout("Input : "+el.input);
+                terminal.current.pushToStdout("Output : "+el.output);               
+            });
+    }}
 
     const commands = {
         /**
@@ -57,6 +75,13 @@ const CLI = props => {
                 dispatch(actions.fetchQuestions(token));
             }
         },
+        getQuestion : {
+            description : "get details of a chosen question",
+            usage : 'getQuestion <number>',
+            fn : function (arg) {
+                getQuestion(arg-1);
+            }
+        },
         logout : {          
             description: 'log out',
             usage : 'logout' ,
@@ -80,7 +105,11 @@ const CLI = props => {
 
     useEffect(() => {
         if(questions != null){
-            terminal.current.pushToStdout(questions);
+            questions.map((el,index) => {
+                terminal.current.pushToStdout("Question number "+(index+1)+ " :");
+                terminal.current.pushToStdout(el.name);
+            });
+            console.log(questions);
         }
     },[questionsSuccess])
 

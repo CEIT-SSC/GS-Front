@@ -34,7 +34,7 @@ export const fetchQuestions = (token) => {
                 });
                 // const questions = response.data;
                 console.log(response);
-                dispatch(questionsFetchSuccess(response.data));
+                dispatch(questionsFetchSuccess(response.data.map((el,index)=>el)));
             }
             catch (error) {
                 dispatch(questionsFetchFailure(error))
