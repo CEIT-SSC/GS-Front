@@ -62,11 +62,11 @@ export const addUser = (token,userData) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
+    .then(response => {dispatch(getUsers(token))})
     .catch(error => {
         console.log(error);
-     dispatch(userFail(error));
+        dispatch(userFail(error));
     });
-    dispatch(getUsers(token))
 }
 
 export const addQAdmin = (token,userData) => dispatch => {
@@ -76,10 +76,10 @@ export const addQAdmin = (token,userData) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
+    .then(response => {dispatch(getQAdmins(token))})
     .catch(error => {
      dispatch(userFail(error));
     });
-    dispatch(getQAdmins(token))
 }
 
 export const deleteUser = (token,studentNumber) => dispatch => {
@@ -89,10 +89,10 @@ export const deleteUser = (token,studentNumber) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
+    .then(response => {dispatch(getUsers(token))})
     .catch(error => {
      dispatch(userFail(error));
     });
-    dispatch(getUsers(token))
     
 }
 export const deleteQAdmin = (token,username) => dispatch => {
@@ -102,10 +102,10 @@ export const deleteQAdmin = (token,username) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
+    .then(response => {dispatch(getQAdmins(token))})
     .catch(error => {
      dispatch(userFail(error));
     });
-    dispatch(getQAdmins(token))
 }
 
 export const editUser = (token,userData, studentNumber) => dispatch => {
@@ -115,10 +115,10 @@ export const editUser = (token,userData, studentNumber) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
+    .then(response => {dispatch(getUsers(token))})
     .catch(error => {
      dispatch(userFail(error));
     });
-    dispatch(getUsers(token))
 } 
 
 export const editQAdmin = (token,adminData, username) => dispatch => {
@@ -129,10 +129,10 @@ export const editQAdmin = (token,adminData, username) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
+    .then(response => {dispatch(getQAdmins(token))})
     .catch(error => {
      dispatch(userFail(error));
     });
-    dispatch(getQAdmins(token))
 }
 
 

@@ -124,7 +124,7 @@ const EditForm = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    token: state.superAdminAuth.token,
+    token: state.adminAuth.token,
     dataType: state.userAdminCRUD.dataType,
     loading: state.userAdminCRUD.loading
 })

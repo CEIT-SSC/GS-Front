@@ -13,13 +13,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import fileUploaderReducer from './store/reducers/fileUploader'; 
 import jokeFetchReducer from './store/reducers/fetchJokes';
-import superAdminAuthReducer from './store/reducers/superAdminAuth';
+import adminAuthReducer from './store/reducers/adminAuth';
 import userAdminCRUDReducer from './store/reducers/user-admin-CRUD';
 
 const rootReducer= combineReducers({
   fileUploader:fileUploaderReducer,
   jokeFethch: jokeFetchReducer,
-  superAdminAuth: superAdminAuthReducer,
+  adminAuth: adminAuthReducer,
   userAdminCRUD: userAdminCRUDReducer
 });
 

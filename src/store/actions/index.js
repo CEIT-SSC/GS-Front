@@ -9,7 +9,7 @@ export {
 export {
     authSuperAdmin,
     logoutSuperAdmin
-} from './superAdminAuth'
+} from './adminAuth'
 
 export {
     getUsers,

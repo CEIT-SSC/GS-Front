@@ -57,7 +57,7 @@ const UserAdminList = (props) => {
     }
 
     if (token === null) {
-        return <Redirect to="/login/superadmin" />
+        return <Redirect to="/login/admin" />
     }
 
     return (
@@ -101,7 +101,7 @@ const UserAdminList = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    token: state.superAdminAuth.token,
+    token: state.adminAuth.token,
     data: state.userAdminCRUD.data,
     dataType: state.userAdminCRUD.dataType,
     loading: state.userAdminCRUD.loading,

@@ -12,11 +12,11 @@ const SuperAdminPanel = props => {
     const { token} = props;
  
     const handleLogout = (event) => {
-        onLogout(token);
+        onLogout(token, 'Super Admin');
     }
 
     if(token == null){
-        return <Redirect to="/login/superadmin" />
+        return <Redirect to="/login/admin" />
     }
 
     return (
@@ -37,7 +37,7 @@ const SuperAdminPanel = props => {
 }
 
 const mapStateToProps = (state) => ({
-    token: state.superAdminAuth.token
+    token: state.adminAuth.token
 })
 
 export default connect(mapStateToProps)(SuperAdminPanel);
