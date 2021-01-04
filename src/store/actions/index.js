@@ -17,6 +17,10 @@ export {
 } from './superAdminAuth'
 
 export {
+    fetchQuestions
+}from './fetchQuestions'
+
+export {
     getUsers,
     getQAdmins,
     addUser,

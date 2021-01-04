@@ -10,7 +10,8 @@ const CLI = props => {
     const inputRef = React.createRef();
     const [file, setFile] = useState(null);
 
-    const {upFileSuc, upFileErr, jokesToShow, jokesSuccess, jokesErr} = props;
+    const {upFileSuc, upFileErr, jokesToShow, jokesSuccess, jokesErr , error, token ,username, isAuthenticated, 
+    questions,questionsSuccess,questionsErr } = props;
 
     const dispatch=useDispatch();
 
@@ -38,18 +39,58 @@ const CLI = props => {
             }
         },
         login : {
-            description: 'log i as a user',
-            usage: 'login <studentNumber> <password>',
-            //TODO: define login function
-            fn: function (arg) {
+            description: 'log in as a user',
+            usage: 'login <studentNumber> <Password>',
+            fn: function (arg1, arg2) {
                 const userData = {
-                    studentNumber: arg[0],
-                    password: arg[1]
+                    studentNumber: arg1,
+                    password: arg2
                 };
+                console.log(userData);
                 dispatch(actions.authUser(userData));
+            }
+        },
+        getQuestions : {
+            description : 'fetch available questions',
+            usage : 'getQuestions' , 
+            fn : function () {
+                dispatch(actions.fetchQuestions(token));
+            }
+        },
+        logout : {          
+            description: 'log out',
+            usage : 'logout' ,
+            fn : function () {
+                console.log(token);
+                dispatch(actions.logoutUser(token));
             }
         }
     }
+    useEffect(()=> {
+        if(username != "user"){
+            terminal.current.pushToStdout("Welcome "+ username);
+        }
+    },[username])
+
+    useEffect (() =>{
+        if(error!=null) {
+            terminal.current.pushToStdout(error.message);
+        }
+    },[error])
+
+    useEffect(() => {
+        if(questions != null){
+            terminal.current.pushToStdout(questions);
+        }
+    },[questionsSuccess])
+
+
+    useEffect(() => {
+        if(questionsErr != null){
+            terminal.current.pushToStdout(questionsErr.message);
+        }
+    },[questionsErr])
+    
     /**
      * print the fetched jokes, or the error message if unsuccessful
      */
@@ -116,6 +157,13 @@ const mapStateToProps = (state) => {
         jokesToShow : state.jokeFethch.jokes,
         jokesSuccess : state.jokeFethch.success,
         jokesErr : state.jokeFethch.error,
+        error : state.userAuth.error,
+        token : state.userAuth.token,
+        username : state.userAuth.username,
+        isAuthenticated : state.userAuth.isAuthenticated,
+        questions : state.questionFetch.questions,
+        questionsSuccess : state.questionFetch.success,
+        questionsErr : state.questionFetch.error
     }
 }
 

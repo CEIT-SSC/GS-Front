@@ -32,10 +32,12 @@ export const logoutSuccess = () => {
 export const authUser = (userData) => {
     return dispatch => {
         dispatch(authStart());
-
-        axios.get("/user/login", userData)
+        axios.post("/user/login", userData)
             .then(response => {
-                // dispatch(authSuccess(response.data.token, response.data.admin.username));
+                console.log(response);
+                dispatch(authSuccess(response.data.token, response.data.user.studentNumber));
+                console.log(response.data.token);
+                
             })
             .catch(error => {
                 dispatch(authFail(error));
