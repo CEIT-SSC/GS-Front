@@ -8,7 +8,7 @@ import * as actions from '../../store/actions';
 const SuperAdminPanel = props => {
 
     const dispatch = useDispatch()
-    const onLogout = (token) => dispatch(actions.logoutSuperAdmin(token));
+    const onLogout = (token, adminType) => dispatch(actions.logoutSuperAdmin(token, adminType));
     const { token} = props;
  
     const handleLogout = (event) => {
@@ -30,7 +30,7 @@ const SuperAdminPanel = props => {
                 </Navbar>
                 <MainButton to="/list/superadmin/QAdmin"> Question Admins </MainButton>
                 <MainButton to="/list/superadmin/user"> Users </MainButton>
-                <MainButton to="#"> Questions  </MainButton>
+                <MainButton to="/list/questions"> Questions  </MainButton>
             </Container>
         </>
     )

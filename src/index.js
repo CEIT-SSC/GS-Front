@@ -15,12 +15,14 @@ import fileUploaderReducer from './store/reducers/fileUploader';
 import jokeFetchReducer from './store/reducers/fetchJokes';
 import adminAuthReducer from './store/reducers/adminAuth';
 import userAdminCRUDReducer from './store/reducers/user-admin-CRUD';
+import questionsReducer from './store/reducers/questions';
 
 const rootReducer= combineReducers({
   fileUploader:fileUploaderReducer,
   jokeFethch: jokeFetchReducer,
   adminAuth: adminAuthReducer,
-  userAdminCRUD: userAdminCRUDReducer
+  userAdminCRUD: userAdminCRUDReducer,
+  questions: questionsReducer
 });
 
 const store= createStore(rootReducer,composeWithDevTools(applyMiddleware(thunk)));
