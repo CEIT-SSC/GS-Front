@@ -48,7 +48,7 @@ export const getQuestions = (token) => dispatch => {
 
 export const addQuestion = (token, data) => dispatch => {
     dispatch(fetchQestionsStart());
-    axios.post("/quessadsadtion" , data , {
+    axios.post("/question" , data , {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
