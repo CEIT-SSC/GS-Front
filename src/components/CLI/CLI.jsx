@@ -10,9 +10,28 @@ const CLI = props => {
     const inputRef = React.createRef();
     const [file, setFile] = useState(null);
 
-    const {upFileSuc, upFileErr, jokesToShow, jokesSuccess, jokesErr} = props;
+    const {upFileSuc, upFileErr, jokesToShow, jokesSuccess, jokesErr , error, token ,username, isAuthenticated, 
+    questions,questionsSuccess,questionsErr } = props;
 
     const dispatch=useDispatch();
+    
+    const getQuestion =(index) =>{
+        if(questions===null){
+            dispatch(actions.fetchQuestions(token));
+        }
+        else if(index <0 || index >=questions.length){
+        terminal.current.pushToStdout("Invalid Index");
+        }
+        else{          
+            const qel=questions[index];
+            terminal.current.pushToStdout(qel.name);
+            terminal.current.pushToStdout(qel.body);
+            qel.examples.map((el, index2) => {
+                terminal.current.pushToStdout("Example "+ (index2+1) +" :");
+                terminal.current.pushToStdout("Input : "+el.input);
+                terminal.current.pushToStdout("Output : "+el.output);               
+            });
+    }}
 
     const commands = {
         /**
@@ -36,8 +55,71 @@ const CLI = props => {
                 inputRef.current.click();
 
             }
+        },
+        login : {
+            description: 'log in as a user',
+            usage: 'login <studentNumber> <Password>',
+            fn: function (arg1, arg2) {
+                const userData = {
+                    studentNumber: arg1,
+                    password: arg2
+                };
+                console.log(userData);
+                dispatch(actions.authUser(userData));
+            }
+        },
+        getQuestions : {
+            description : 'fetch available questions',
+            usage : 'getQuestions' , 
+            fn : function () {
+                dispatch(actions.fetchQuestions(token));
+            }
+        },
+        getQuestion : {
+            description : "get details of a chosen question",
+            usage : 'getQuestion <number>',
+            fn : function (arg) {
+                getQuestion(arg-1);
+            }
+        },
+        logout : {          
+            description: 'log out',
+            usage : 'logout' ,
+            fn : function () {
+                console.log(token);
+                dispatch(actions.logoutUser(token));
+            }
         }
     }
+    useEffect(()=> {
+        if(username != "user"){
+            terminal.current.pushToStdout("Welcome "+ username);
+        }
+    },[username])
+
+    useEffect (() =>{
+        if(error!=null) {
+            terminal.current.pushToStdout(error.message);
+        }
+    },[error])
+
+    useEffect(() => {
+        if(questions != null){
+            questions.map((el,index) => {
+                terminal.current.pushToStdout("Question number "+(index+1)+ " :");
+                terminal.current.pushToStdout(el.name);
+            });
+            console.log(questions);
+        }
+    },[questionsSuccess])
+
+
+    useEffect(() => {
+        if(questionsErr != null){
+            terminal.current.pushToStdout(questionsErr.message);
+        }
+    },[questionsErr])
+    
     /**
      * print the fetched jokes, or the error message if unsuccessful
      */
@@ -104,6 +186,13 @@ const mapStateToProps = (state) => {
         jokesToShow : state.jokeFethch.jokes,
         jokesSuccess : state.jokeFethch.success,
         jokesErr : state.jokeFethch.error,
+        error : state.userAuth.error,
+        token : state.userAuth.token,
+        username : state.userAuth.username,
+        isAuthenticated : state.userAuth.isAuthenticated,
+        questions : state.questionFetch.questions,
+        questionsSuccess : state.questionFetch.success,
+        questionsErr : state.questionFetch.error
     }
 }
 

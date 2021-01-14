@@ -7,9 +7,18 @@ export {
 } from './fetchJokes';
 
 export {
+    authUser,
+    logoutUser
+} from './userAuth'
+
+export {
     authSuperAdmin,
     logoutSuperAdmin
 } from './adminAuth'
+
+export {
+    fetchQuestions
+}from './fetchQuestions'
 
 export {
     getUsers,
