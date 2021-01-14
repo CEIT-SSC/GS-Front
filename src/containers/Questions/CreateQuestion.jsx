@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import QuestionForm from './../../../components/QuestionForm';
-import * as actions from '../../../store/actions';
+import QuestionForm from '../../components/QuestionForm';
+import * as actions from '../../store/actions';
 
 
 const CreateQuestion = (props) => {
@@ -27,6 +27,9 @@ const CreateQuestion = (props) => {
         bodyFormData.append('answer', formValues[5].files[0]);
         bodyFormData.append('examples', JSON.stringify(examples));
         dispatch(actions.addQuestion(token, bodyFormData));
+    }
+    if(token === null){
+        return <Redirect to="/login/admin" />
     }
     if(success){
         return <Redirect to="/list/questions" />

@@ -6,7 +6,9 @@ const initialState = {
     error: null,
     loading: false,
     createSuccess: false,
-    createError: null
+    createError: null,
+    editSuccess: false,
+    editError: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -21,6 +23,10 @@ const reducer = (state = initialState, action) => {
             return { ...state, createSuccess: true, loading: false };
         case actions.CREATE_QUESTIONS_ERROR:
             return { ...state, createError: action.error, loading: false };
+        case actions.EDIT_QUESTIONS_SUCCESS:
+            return { ...state, editSuccess: true, loading: false };
+        case actions.EDIT_QUESTIONS_ERROR:
+            return { ...state, editError: action.error, loading: false };
         default:
             return state;
     }

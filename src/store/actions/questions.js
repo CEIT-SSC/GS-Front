@@ -25,9 +25,17 @@ const createQuestionSuccess = () => ({
     type: actions.CREATE_QUESTIONS_SUCCESS
 })
 
-
 const createQuestionFail = (error) => ({
     type: actions.CREATE_QUESTIONS_ERROR,
+    error
+})
+
+const editQuestionSuccess = () => ({
+    type: actions.EDIT_QUESTIONS_SUCCESS
+})
+
+const editQuestionFail = (error) => ({
+    type: actions.EDIT_QUESTIONS_ERROR,
     error
 })
 
@@ -82,9 +90,9 @@ export const editQuestion = (token, data, id) => dispatch => {
             Authorization: `Bearer ${token}`
         }
     })
-    // .then(response => {dispatch(getUsers(token))})
+    .then(response => {dispatch(editQuestionSuccess())})
     .catch(error => {
-     dispatch(fetchQestionsFail(error));
+     dispatch(editQuestionFail(error));
     });
 } 
 

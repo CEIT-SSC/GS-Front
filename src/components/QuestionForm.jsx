@@ -3,7 +3,7 @@ import { Form, Button, Spinner, Container, Card, Row, Col, Alert } from 'react-b
 
 const QuestionForm = (props) => {
 
-    const { loading, error, formValues, setFormValues, examples, setExamples, onSubmitHandler } = props;
+    const {edit, loading, error, formValues, setFormValues, examples, setExamples, onSubmitHandler } = props;
     
     const [formElements] = useState([
         {
@@ -34,13 +34,13 @@ const QuestionForm = (props) => {
             type: 'file',
             label: 'Test Generator',
             placeholder: 'select file',
-            required: true
+            required: edit ? false : true
         },
         {
             type: 'file',
             label: 'Answer',
             placeholder: 'select file',
-            required: true
+            required: edit ? false : true
         }
     ])
 

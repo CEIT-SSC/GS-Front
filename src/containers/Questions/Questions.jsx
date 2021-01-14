@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Spinner, Row, Col, Alert } from 'react-bootstrap';
 import { useDispatch, connect } from 'react-redux';
 import { FaTrashAlt, FaEdit } from 'react-icons/fa';
@@ -9,7 +9,6 @@ import * as actions from '../../store/actions';
 
 const QAdminPanel = (props) => {
     const dispatch = useDispatch();
-    const [questionToEdit, setQuestionToEdit] = useState(null);
     const { token, data, loading, error } = props;
 
     useEffect(() => {
@@ -21,7 +20,10 @@ const QAdminPanel = (props) => {
     }
 
     const onEditClick = (event, question) => {
-        setQuestionToEdit(question);
+        props.history.push({
+            pathname: '/question/edit',
+            state: { questionToEdit: question }
+          });
     }
     const onDeleteClick = (event, el) => {
         if (window.confirm("Are you sure you want to delete?")) {
@@ -57,7 +59,6 @@ const QAdminPanel = (props) => {
 
     return (
         <>
-            {/* <EditForm onSuccess={() => setShowForm(false)} userToEdit={questionToEdit} ></EditForm> */}
             <Container>
                 <Row>
                     <Col>
