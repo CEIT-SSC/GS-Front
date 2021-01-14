@@ -9,7 +9,7 @@ const CLI = props => {
     const terminal = React.createRef();
     const inputRef = React.createRef();
     const [file, setFile] = useState(null);
-
+    const [qIndex, setQIndex] = useState(null);
     const {upFileSuc, upFileErr, jokesToShow, jokesSuccess, jokesErr , error, token ,username, isAuthenticated, 
     questions,questionsSuccess,questionsErr } = props;
 
@@ -17,6 +17,7 @@ const CLI = props => {
     
     const getQuestion =(index) =>{
         if(questions===null){
+            setQIndex(index);
             dispatch(actions.fetchUserQuestions(token));
         }
         else if(index <0 || index >=questions.length){
@@ -26,7 +27,7 @@ const CLI = props => {
             const qel=questions[index];
             terminal.current.pushToStdout(qel.name);
             terminal.current.pushToStdout(qel.body);
-            qel.examples.map((el, index2) => {
+            qel.examples.forEach((el, index2) => {
                 terminal.current.pushToStdout("Example "+ (index2+1) +" :");
                 terminal.current.pushToStdout("Input : "+el.input);
                 terminal.current.pushToStdout("Output : "+el.output);               
@@ -105,11 +106,24 @@ const CLI = props => {
 
     useEffect(() => {
         if(questions != null){
-            questions.map((el,index) => {
-                terminal.current.pushToStdout("Question number "+(index+1)+ " :");
-                terminal.current.pushToStdout(el.name);
-            });
-            console.log(questions);
+            if(qIndex === null){
+                questions.forEach((el,index) => {
+                    terminal.current.pushToStdout("Question number "+(index+1)+ " :");
+                    terminal.current.pushToStdout(el.name);
+                });
+                console.log(questions);
+            } else {
+                const qel=questions[qIndex];
+                terminal.current.pushToStdout(qel.name);
+                terminal.current.pushToStdout(qel.body);
+                qel.examples.forEach((el, index2) => {
+                    terminal.current.pushToStdout("Example "+ (index2+1) +" :");
+                    terminal.current.pushToStdout("Input : "+el.input);
+                    terminal.current.pushToStdout("Output : "+el.output);               
+                });
+                setQIndex(null);
+            }
+
         }
     },[questionsSuccess])
 
