@@ -1,5 +1,5 @@
 import * as actions from './actionTypes';
-import axios from 'axios';
+import axios from '../../api/axios';
 
 
 export const fileUploadStart = () => {
@@ -21,17 +21,14 @@ export const fileUploadFailure = (error) => {
     }
 }
 
-export const uploadFile = (files) => {
+export const uploadFile = (data) => {
     return (dispatch) => {
         dispatch(fileUploadStart());
-        const data = new FormData()
-        for (let el in files) {
-            data.append('files', files[el]);
-        }
-        axios.post("http://localhost:5000/files", data, { 
+        
+        axios.post("/question/submit", data, { 
         })
             .then(res => { 
-                dispatch(fileUploadSuccess(files));
+                dispatch(fileUploadSuccess(data));
             })
             .catch(err => { dispatch(fileUploadFailure(err)) })
     }

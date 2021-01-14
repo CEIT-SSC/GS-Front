@@ -48,13 +48,12 @@ const CLI = props => {
         /**
          * open a file selector to upload files
          */
-        file: {
-            description: 'uploads a file to the local server',
-            usage: 'file',
+        submit: {
+            description: 'upload code and results(as .txt file) together',
+            usage: 'submit <question index>',
             fn: function (arg) {
                 setFile(null);
                 inputRef.current.click();
-
             }
         },
         login : {
@@ -93,7 +92,7 @@ const CLI = props => {
         }
     }
     useEffect(()=> {
-        if(username != "user"){
+        if(username !== "user"){
             terminal.current.pushToStdout("Welcome "+ username);
         }
     },[username])
@@ -155,7 +154,24 @@ const CLI = props => {
      */
     useEffect(() => {
         if (file != null) {
-            dispatch(actions.uploadFile(file));
+            let flag = false;
+            const data = new FormData();
+            // data.append('qustionID');
+            for (let el in file) {
+                if(el !== 'length'){
+                    if(file[el].name.split('.')[1] === 'txt'){
+                        data.append('output', file[el]);
+                        flag = true;
+                    } else {
+                        data.append('code', file[el]);
+                    }
+                }
+            }
+            if (flag){
+                dispatch(actions.uploadFile(data));
+            } else {
+                terminal.current.pushToStdout("you should provide a .txt file for outputs!");
+            }
             setFile(null);
         }
     }, [file])
@@ -172,9 +188,6 @@ const CLI = props => {
         }
     }, [upFileErr])
 
-
-
-
     return (
         <>
             <input type="file" multiple
@@ -187,7 +200,7 @@ const CLI = props => {
                 ref={terminal}
                 commands={commands}
                 welcomeMessage={'Welcome to the React terminal!'}
-                promptLabel={'me@React:~$'}
+                promptLabel={token ? `${username}@GS:~$` : 'me@GS:~$'}
             />
         </>
     );
