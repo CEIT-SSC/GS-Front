@@ -17,8 +17,8 @@ export {
 } from './adminAuth'
 
 export {
-    fetchQuestions
-}from './fetchQuestions'
+    fetchUserQuestions
+}from './fetchUserQuestions'
 
 export {
     getUsers,

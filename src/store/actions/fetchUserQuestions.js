@@ -4,25 +4,25 @@ import axios from '../../api/axios';
 
 export const questionsFetchStart = () => {
     return {
-        type: actions.FETCH_QUESTIONS_START
+        type: actions.FETCH_USER_QUESTIONS_START
     }
 }
 
 export const questionsFetchSuccess = (questions) => {
     return {
-        type: actions.FETCH_QUESTIONS_SUCCESS,
+        type: actions.FETCH_USER_QUESTIONS_SUCCESS,
         questions
     }
 }
 
 export const questionsFetchFailure = (error) => {
     return {
-        type: actions.FETCH_QUESTIONS_FAILURE,
+        type: actions.FETCH_USER_QUESTIONS_FAILURE,
         error
     }
 }
 
-export const fetchQuestions = (token) => {
+export const fetchUserQuestions = (token) => {
     return (dispatch) => {
         dispatch(questionsFetchStart());
         const sendReq = async () => {

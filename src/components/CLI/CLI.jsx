@@ -17,7 +17,7 @@ const CLI = props => {
     
     const getQuestion =(index) =>{
         if(questions===null){
-            dispatch(actions.fetchQuestions(token));
+            dispatch(actions.fetchUserQuestions(token));
         }
         else if(index <0 || index >=questions.length){
         terminal.current.pushToStdout("Invalid Index");
@@ -72,7 +72,7 @@ const CLI = props => {
             description : 'fetch available questions',
             usage : 'getQuestions' , 
             fn : function () {
-                dispatch(actions.fetchQuestions(token));
+                dispatch(actions.fetchUserQuestions(token));
             }
         },
         getQuestion : {
@@ -190,9 +190,9 @@ const mapStateToProps = (state) => {
         token : state.userAuth.token,
         username : state.userAuth.username,
         isAuthenticated : state.userAuth.isAuthenticated,
-        questions : state.questionFetch.questions,
-        questionsSuccess : state.questionFetch.success,
-        questionsErr : state.questionFetch.error
+        questions : state.userQuestions.questions,
+        questionsSuccess : state.userQuestions.success,
+        questionsErr : state.userQuestions.error
     }
 }
 
