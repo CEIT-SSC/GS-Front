@@ -14,7 +14,7 @@ export {
 export {
     authSuperAdmin,
     logoutSuperAdmin
-} from './superAdminAuth'
+} from './adminAuth'
 
 export {
     fetchQuestions
@@ -30,3 +30,10 @@ export {
     editQAdmin,
     editUser
 } from './user-admin-CRUD';
+
+export {
+    addQuestion,
+    getQuestions,
+    deleteQuestion,
+    editQuestion
+} from './questions';

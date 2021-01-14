@@ -13,18 +13,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import fileUploaderReducer from './store/reducers/fileUploader'; 
 import jokeFetchReducer from './store/reducers/fetchJokes';
-import superAdminAuthReducer from './store/reducers/superAdminAuth';
+import adminAuthReducer from './store/reducers/adminAuth';
 import userAdminCRUDReducer from './store/reducers/user-admin-CRUD';
 import userAuthenticationReducer from './store/reducers/userAuth';
 import questionFetchReducer from './store/reducers/fetchQuestions';
+import questionsReducer from './store/reducers/questions';
 
 const rootReducer= combineReducers({
   fileUploader:fileUploaderReducer,
   jokeFethch: jokeFetchReducer,
-  superAdminAuth: superAdminAuthReducer,
-  userAdminCRUD: userAdminCRUDReducer,
   userAuth : userAuthenticationReducer,
   questionFetch : questionFetchReducer
+  adminAuth: adminAuthReducer,
+  userAdminCRUD: userAdminCRUDReducer,
+  questions: questionsReducer
 });
 
 const store= createStore(rootReducer,composeWithDevTools(applyMiddleware(thunk)));

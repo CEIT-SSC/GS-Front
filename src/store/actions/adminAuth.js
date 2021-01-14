@@ -29,13 +29,16 @@ export const logoutSuccess = () => {
     }
 }
 
-export const authSuperAdmin = (userData) => {
+export const authSuperAdmin = (userData, adminType) => {
     return dispatch => {
         dispatch(authStart());
-
-        axios.post("/superarea/login", userData)
+        
+        let url = adminType === 'Question Admin' ? '/questionadmin/login' : '/superarea/login';
+        
+        axios.post(url, userData)
             .then(response => {
-                dispatch(authSuccess(response.data.token, response.data.admin.username));
+                const username = adminType === 'Question Admin' ? response.data.questionAdmin.username : response.data.admin.username;
+                dispatch(authSuccess(response.data.token, username));
             })
             .catch(error => {
                 dispatch(authFail(error));
@@ -43,10 +46,11 @@ export const authSuperAdmin = (userData) => {
     }
 }
 
-export const logoutSuperAdmin = (token) => {
+export const logoutSuperAdmin = (token, adminType) => {
     return dispatch => {
-        try {
-            axios.post('/api/logout', {
+        let url = adminType === 'Question Admin' ? '/questionadmin/me/logout' : '/superarea/logout';
+        try {   
+            axios.post(url, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

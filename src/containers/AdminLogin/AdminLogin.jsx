@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Form, Button, Card, Spinner, Alert } from 'react-bootstrap';
 import { Container } from './AdminLoginStyle';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
 
 import * as actions from '../../store/actions';
 
 const AdminLogin = props => {
+    const [adminType, setAdminType] = useState('Super Admin');
     const [formElements, setFromElements] = useState([
         {
             label: 'Username',
@@ -23,8 +24,8 @@ const AdminLogin = props => {
     ])
 
     const dispatch = useDispatch()
-    const onAuthUser = (userData) => dispatch(actions.authSuperAdmin(userData));
-    const {loading, error, isAuthenticated} = props;
+    const onAuthUser = (userData, adminType) => dispatch(actions.authSuperAdmin(userData, adminType));
+    const { loading, error, isAuthenticated } = props;
 
     const inputChangeHandler = (event, index) => {
         const updatedForm = [...formElements];
@@ -39,10 +40,11 @@ const AdminLogin = props => {
             username: formElements[0].value,
             password: formElements[1].value
         }
-        onAuthUser(userData);
+        onAuthUser(userData, adminType);
     }
     if (isAuthenticated) {
-        return <Redirect to="/panel/superadmin" />
+        const path = adminType === 'Question Admin' ? '/panel/questionadmin' : '/panel/superadmin';
+        return <Redirect to={path} />
     }
     return (
         <Container>
@@ -56,6 +58,13 @@ const AdminLogin = props => {
                     <Form
                         onSubmit={signinSubmitHandler}
                     >
+                         <Form.Group>
+                            <Form.Control as="select" value={adminType} onChange={(event) => {setAdminType(event.target.value)}}>
+                                <option>Super Admin</option>
+                                <option>Question Admin</option>
+                            </Form.Control>
+                         </Form.Group>
+                        
                         {formElements.map((element, index) => (
                             <Form.Group key={index}>
                                 <Form.Label>{element.label}</Form.Label>
@@ -80,9 +89,9 @@ const AdminLogin = props => {
 }
 
 const mapStateToProps = (state) => ({
-    error : state.superAdminAuth.error,
-    loading : state.superAdminAuth.loading,
-    isAuthenticated : state.superAdminAuth.isAuthenticated
+    error: state.adminAuth.error,
+    loading: state.adminAuth.loading,
+    isAuthenticated: state.adminAuth.isAuthenticated
 })
 
-export default connect(mapStateToProps)(AdminLogin);
+export default connect(mapStateToProps)(withRouter(AdminLogin));
