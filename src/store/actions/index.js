@@ -37,3 +37,7 @@ export {
     deleteQuestion,
     editQuestion
 } from './questions';
+
+export {
+    getScoreBoard
+} from './scoreBoard';

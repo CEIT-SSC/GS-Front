@@ -9,6 +9,7 @@ import QAdminPanel from './containers/QAdminPanel/QAdminPanel';
 import Questions from './containers/Questions/Questions';
 import CreateQuestion from './containers/Questions/CreateQuestion';
 import EditQuestion from './containers/Questions/EditQuestion';
+import ScoreBoard from './containers/ScoreBoard/ScoreBoard';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
       <Route path="/question/create" component={CreateQuestion} />
       <Route path="/question/edit" component={EditQuestion} />
       <Route path="/list/superadmin/:dataType?" component ={UserAdminList} />
+      <Route path="/scoreboard" component={ScoreBoard} />
     </Switch>
   );
 }

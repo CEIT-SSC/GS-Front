@@ -11,7 +11,7 @@ const CLI = props => {
     const [file, setFile] = useState(null);
     const [qIndex, setQIndex] = useState(null);
     const {upFileSuc, upFileErr, jokesToShow, jokesSuccess, jokesErr , error, token ,username, isAuthenticated, 
-    questions,questionsSuccess,questionsErr } = props;
+    questions,questionsSuccess,questionsErr , scores , scoresSuccess , scoresError } = props;
 
     const dispatch=useDispatch();
     
@@ -80,6 +80,13 @@ const CLI = props => {
             usage : 'getQuestion <number>',
             fn : function (arg) {
                 getQuestion(arg-1);
+            }
+        },
+        scoreBoard : {
+            description : "see the ranking board",
+            usage : 'scoreBoard' , 
+            fn :function () {
+                dispatch(actions.getScoreBoard());
             }
         },
         logout : {          
@@ -188,6 +195,22 @@ const CLI = props => {
         }
     }, [upFileErr])
 
+    useEffect (()=>{
+        if(scores){
+            scores.forEach((el,index) => {
+                terminal.current.pushToStdout("Rank number "+(index+1)+ " :");
+                terminal.current.pushToStdout("StudentNumber: " +el.studentNumber + " Penalty: " + el.penalty + " Score: " + el.score);
+                console.log(el);
+            });
+        }
+    },[scoresSuccess])
+
+    useEffect (()=>{
+        if(scoresError){
+            terminal.pushToStdout(scoresError.message);
+        }
+    }, [scoresError])
+
     return (
         <>
             <input type="file" multiple
@@ -219,7 +242,10 @@ const mapStateToProps = (state) => {
         isAuthenticated : state.userAuth.isAuthenticated,
         questions : state.userQuestions.questions,
         questionsSuccess : state.userQuestions.success,
-        questionsErr : state.userQuestions.error
+        questionsErr : state.userQuestions.error,
+        scores: state.getScoreBoard.scores,
+        scoresSuccess: state.getScoreBoard.success , 
+        scoresError: state.getScoreBoard.error
     }
 }
 

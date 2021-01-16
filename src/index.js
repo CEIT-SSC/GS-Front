@@ -18,6 +18,7 @@ import userAdminCRUDReducer from './store/reducers/user-admin-CRUD';
 import userAuthenticationReducer from './store/reducers/userAuth';
 import fetchUserQuestionsReducer from './store/reducers/fetchUserQuestions';
 import questionsReducer from './store/reducers/questions';
+import scoreBoard from './store/reducers/scoreBoard';
 
 const rootReducer= combineReducers({
   fileUploader:fileUploaderReducer,
@@ -26,7 +27,8 @@ const rootReducer= combineReducers({
   userQuestions : fetchUserQuestionsReducer,
   adminAuth: adminAuthReducer,
   userAdminCRUD: userAdminCRUDReducer,
-  questions: questionsReducer
+  questions: questionsReducer,
+  getScoreBoard : scoreBoard
 });
 
 const store= createStore(rootReducer,composeWithDevTools(applyMiddleware(thunk)));
