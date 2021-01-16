@@ -68,7 +68,7 @@ const GUI = props => {
     }
 
     return (
-        <Container>
+        <Container style={{padding: 0, overflow: 'hidden'}}>
             {content}
         </Container>
     );
