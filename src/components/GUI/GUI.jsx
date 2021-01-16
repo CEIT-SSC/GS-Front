@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
-// import { Form, Spinner, Alert, Button, Card } from 'react-bootstrap';
+import { Spinner, Alert } from 'react-bootstrap';
 
 import * as actions from '../../store/actions';
 import { Container } from './GUIStyle';
 import UserLoginForm from '../UserLoginForm';
+import GUIQuestions from '../GUIQuestions/GUIQuestions';
 
 const GUI = props => {
 
@@ -14,8 +15,14 @@ const GUI = props => {
         username: '',
         password: ''
     })
+    const [selectedQIndex, setSelectedQIndex] = useState(0);
+    const { token, authError, authLoading, questionsLoading, questionsErr, questions } = props;
 
-    const { token, authError, authLoading } = props;
+    useEffect(() => {
+        if (token != null) {
+            dispatch(actions.fetchUserQuestions(token));
+        }
+    }, [token, dispatch])
 
     const inputChangeHandler = (event, index) => {
         const updatedForm = { ...formValues };
@@ -39,12 +46,25 @@ const GUI = props => {
     let content = null;
     if (token === null) {
         content = <UserLoginForm
-            loading = {authLoading} 
-            error = {authError} 
-            onSubmitHandler = {loginSubmitHandler} 
-            formValues = {formValues}
-            inputChangeHandler = {inputChangeHandler}
+            loading={authLoading}
+            error={authError}
+            onSubmitHandler={loginSubmitHandler}
+            formValues={formValues}
+            inputChangeHandler={inputChangeHandler}
         />
+    } else {
+        if (questionsLoading) {
+            content = <Spinner animation="border" />
+        } else if (questionsErr) {
+            content = <Alert variant="danger">{questionsErr.message}</Alert>
+        } else if (questions) {
+            content = <GUIQuestions 
+                questions={questions}
+                qClickHandler={setSelectedQIndex}
+                selectedQIndex={selectedQIndex}
+            />
+
+        }
     }
 
     return (
@@ -64,7 +84,8 @@ const mapStateToProps = (state) => {
         username: state.userAuth.username,
         questions: state.userQuestions.questions,
         questionsSuccess: state.userQuestions.success,
-        questionsErr: state.userQuestions.error
+        questionsErr: state.userQuestions.error,
+        questionsLoading: state.userQuestions.loading,
     }
 }
 
