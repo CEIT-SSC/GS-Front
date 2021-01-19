@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import {Container as BSContainer} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 export const Container = styled(BSContainer)`
     height: 100%;
@@ -10,6 +11,7 @@ export const Container = styled(BSContainer)`
 export const QTableContainer = styled.div`
     height: 100%;
     width: 100%;
+    margin-bottom: 15px;
 `
 export const QTableTitle = styled.div`
     font-size: 20px;
@@ -87,4 +89,32 @@ export const SubmitTitle = styled.h5`
     padding: 10px;
     margin: 15px 0;
     border-bottom: 1px solid #ddd;
+`
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: start;
+    position: relative;
+    height: 35px;
+    margin-top: 10px;
+`
+
+export const Button = styled(Link)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    height: 35px;
+    width: 130px;
+    background-color: #ff7800;
+    font-size: 16px;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    &:hover{
+        text-decoration: none;
+        color: white;
+        background-color: #ff9c32;
+    }
 `

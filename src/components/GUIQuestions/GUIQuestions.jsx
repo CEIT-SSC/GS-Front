@@ -5,7 +5,8 @@ import { Row, Col, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import * as actions from '../../store/actions';
 import {
     Container, QTableContainer, QTableTitle, QTableEl, State,
-    SQContainer, SQTitle, SQBody, SQExample, SQHeader, SubmitTitle
+    SQContainer, SQTitle, SQBody, SQExample, SQHeader, SubmitTitle,
+     Button as LinkButton, ButtonContainer
 } from './GUIQuestionsStyle';
 
 const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error, success, token }) => {
@@ -54,6 +55,9 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
                                 <State state={q.state} />
                             </QTableEl>
                         ))}
+                        <ButtonContainer>
+                            <LinkButton to="/scoreboard">جدول امتیازها</LinkButton>
+                        </ButtonContainer>
                     </QTableContainer>
 
                 </Col>
