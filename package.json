@@ -10,6 +10,7 @@
     "bootstrap": "^4.5.3",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
+    "react-bootstrap-table": "^4.3.1",
     "react-confirm-alert": "^2.6.2",
     "react-console-emulator": "^5.0.0",
     "react-dom": "^17.0.1",
