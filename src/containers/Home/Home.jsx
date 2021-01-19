@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Toggle from '../../components/UI/switch/ToggleSwitch';
 import { MainContainer, GuiContainer } from './HomeStyle';
 import CLI from '../../components/CLI/CLI';

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useDispatch, connect } from 'react-redux';
-import {Table} from 'react-bootstrap';
+import {Table, Row, Col} from 'react-bootstrap';
 import {MainContainer , ListContainer} from './ScoreBoardStyle';
 
 import * as actions from '../../store/actions';
@@ -27,24 +27,26 @@ const ScoreBoard = (props) => {
         dispatch(actions.getScoreBoard());
     }
 
-
-
     return (
         <MainContainer> 
-            <ListContainer>
-                <h1> ScoreBoard</h1>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>StudentNumber</th>
-                            <th>Penalty</th>
-                            <th>Score</th>
-                        </tr>
-                        {dataList}
-                    </thead> 
-                </Table>
-            </ListContainer>
+            <Row>
+                <Col>
+                    <ListContainer>
+                        <h1> ScoreBoard</h1>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>StudentNumber</th>
+                                    <th>Penalty</th>
+                                    <th>Score</th>
+                                </tr>
+                                {dataList}
+                            </thead> 
+                        </Table>
+                    </ListContainer>
+                </Col>
+            </Row>
         </MainContainer>
     )
 }

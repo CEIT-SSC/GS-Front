@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import Terminal from 'react-console-emulator';
+import { Container, Row, Col } from 'react-bootstrap';
 
 
 import * as actions from '../../store/actions';
@@ -224,13 +225,15 @@ const CLI = props => {
                 ref={inputRef}
                 onChange={(event) => { setFile(event.target.files) }}
             />
-            <Terminal
-                style={{ width: '70%', height: '60%' }}
-                ref={terminal}
-                commands={commands}
-                welcomeMessage={'Welcome to the React terminal!'}
-                promptLabel={token ? `${username}@GS:~$` : 'me@GS:~$'}
-            />
+            <Container style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Terminal
+                    style={{ width: '100%', height: '80%', maxWidth: '900px', maxHeight: '450px' }}
+                    ref={terminal}
+                    commands={commands}
+                    welcomeMessage={'Welcome to General Shit event :)\nRun help to see the commands or switch to GUI.'}
+                    promptLabel={token ? `${username}@GS:~$` : 'me@GS:~$'}
+                />
+            </Container>
         </>
     );
 }
