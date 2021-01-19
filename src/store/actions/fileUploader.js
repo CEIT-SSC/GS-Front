@@ -21,11 +21,14 @@ export const fileUploadFailure = (error) => {
     }
 }
 
-export const uploadFile = (data) => {
+export const uploadFile = (data, token) => {
     return (dispatch) => {
         dispatch(fileUploadStart());
         
-        axios.post("/question/submit", data, { 
+        axios.post("/question/submit", data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         })
             .then(res => { 
                 dispatch(fileUploadSuccess(data));

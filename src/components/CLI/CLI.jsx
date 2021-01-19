@@ -9,6 +9,7 @@ const CLI = props => {
     const terminal = React.createRef();
     const inputRef = React.createRef();
     const [file, setFile] = useState(null);
+    const [qToSubmit, setQToSubmit] = useState(null);
     const [qIndex, setQIndex] = useState(null);
     const {upFileSuc, upFileErr, jokesToShow, jokesSuccess, jokesErr , error, token ,username, isAuthenticated, 
     questions,questionsSuccess,questionsErr , scores , scoresSuccess , scoresError } = props;
@@ -52,7 +53,9 @@ const CLI = props => {
             description: 'upload code and results(as .txt file) together',
             usage: 'submit <question index>',
             fn: function (arg) {
+                setQToSubmit(arg);
                 setFile(null);
+                console.log(file);
                 inputRef.current.click();
             }
         },
@@ -64,7 +67,6 @@ const CLI = props => {
                     studentNumber: arg1,
                     password: arg2
                 };
-                console.log(userData);
                 dispatch(actions.authUser(userData));
             }
         },
@@ -117,7 +119,6 @@ const CLI = props => {
                     terminal.current.pushToStdout("Question number "+(index+1)+ " :");
                     terminal.current.pushToStdout(el.name);
                 });
-                console.log(questions);
             } else {
                 const qel=questions[qIndex];
                 terminal.current.pushToStdout(qel.name);
@@ -161,23 +162,28 @@ const CLI = props => {
      */
     useEffect(() => {
         if (file != null) {
-            let flag = false;
-            const data = new FormData();
-            // data.append('qustionID');
-            for (let el in file) {
-                if(el !== 'length'){
-                    if(file[el].name.split('.')[1] === 'txt'){
-                        data.append('output', file[el]);
-                        flag = true;
-                    } else {
-                        data.append('code', file[el]);
+            if(questions !== null){
+                let flag = false;
+                const data = new FormData();
+                data.append('questionID', questions[parseInt(qToSubmit)-1]._id);
+                for (let el in file) {
+                    if(el !== 'length'){
+                        if(file[el].name.split('.')[1] === 'txt'){
+                            data.append('output', file[el]);
+                            flag = true;
+                        } else {
+                            data.append('code', file[el]);
+                        }
                     }
                 }
-            }
-            if (flag){
-                dispatch(actions.uploadFile(data));
+                if (flag){
+                    dispatch(actions.uploadFile(data, token));
+                } else {
+                    terminal.current.pushToStdout("you should provide a .txt file for outputs!");
+                }
+                setQToSubmit(null);
             } else {
-                terminal.current.pushToStdout("you should provide a .txt file for outputs!");
+                terminal.current.pushToStdout("run getQuestions first!");
             }
             setFile(null);
         }

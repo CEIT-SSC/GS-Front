@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
     z-index: 99;
     position: absolute; 
-    top: 50px; 
-    left: 50px;
+    top: 25px; 
+    left: 25px;
 `
 export const Span = styled.span`
     color: white;
