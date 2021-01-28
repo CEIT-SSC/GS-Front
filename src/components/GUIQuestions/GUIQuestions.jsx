@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Row, Col, Form, Button, Alert, Spinner } from 'react-bootstrap';
 
+
 import * as actions from '../../store/actions';
 import {
     Container, QTableContainer, QTableTitle, QTableEl, State,
@@ -9,16 +10,18 @@ import {
      Button as LinkButton, ButtonContainer
 } from './GUIQuestionsStyle';
 
-const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error, success, token }) => {
+const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error, success, token , testCase }) => {
 
     const [code, setCode] = useState(null);
     const [output, setOutput] = useState(null);
     //these two are used to show error and success alerts only for the related question not all of them.
     const [showError, setShowError] = useState(true);
     const [showSuccess, setShowSuccess] = useState(true);
+    const [showDlLink , setShowDlLink] = useState(false);
 
     const dispatch = useDispatch();
     const selectedQuestion = questions[selectedQIndex];
+    
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
@@ -35,10 +38,20 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
         setShowSuccess(true);
     }
 
+    const dlTestcaseHandler = (event) => {
+        event.preventDefault();
+        dispatch(actions.getTestCase(questions[selectedQIndex]._id, token));
+    }
+
     const clickHandler = (index) => {
         setShowError(false);
         setShowSuccess(false);
-        qClickHandler(index)
+        qClickHandler(index);
+        setShowDlLink(false);
+        dispatch(actions.getTestCase(questions[selectedQIndex]._id, token));
+    }
+    if(testCase){
+        setShowDlLink(true);
     }
 
     return (
@@ -73,6 +86,11 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
                                 <SQExample>{el.output}</SQExample>
                             </div>
                         ))}
+                        <a href={URL.getObjectURL(new File([testCase], questions[selectedQIndex].name+"TestCase.txt"))}
+                        download={questions[selectedQIndex].name+"TestCase.txt"}
+                        style={{display : showDlLink ? 'inline-block' : 'none'}} > 
+                            Download Your Own Testcase 
+                        </a>
                         <SubmitTitle>ارسال پاسخ</SubmitTitle>
                         {(success && showSuccess) && <Alert variant="success">Question submitted successfully</Alert>}
                         {(error && showError) && <Alert variant="danger">{error.message}</Alert>}
@@ -108,7 +126,8 @@ const mapStateToProps = (state) => ({
     loading: state.fileUploader.loading,
     error: state.fileUploader.error,
     success: state.fileUploader.success,
-    token: state.userAuth.token
+    token: state.userAuth.token,
+    testCase: state.getTestCase.testCase
 })
 
 export default connect(mapStateToProps)(GUIQuestions);
