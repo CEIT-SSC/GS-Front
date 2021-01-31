@@ -1,0 +1,11 @@
+version: "3"
+services: 
+  gsfront:
+    container_name: gsfront
+    build: .
+    port:
+    - "3000:80"
+networks: 
+  default:
+    external:
+      name: gsnet
