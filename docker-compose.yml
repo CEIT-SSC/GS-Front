@@ -3,7 +3,7 @@ services:
   gsfront:
     container_name: gsfront
     build: .
-    port:
+    ports:
     - "3000:80"
 networks: 
   default:

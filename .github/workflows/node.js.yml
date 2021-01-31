@@ -35,6 +35,5 @@ jobs:
           cd ~/gsBack/GS-Front
           docker-compose down
           git pull origin master
-          npm build
           docker-compose build
           docker-compose up -d
