@@ -50,9 +50,9 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
         setShowDlLink(false);
         dispatch(actions.getTestCase(questions[selectedQIndex]._id, token));
     }
-    if(testCase){
-        setShowDlLink(true);
-    }
+    // if(testCase){
+    //     setShowDlLink(true);
+    // }
 
     return (
         <Container>
@@ -86,9 +86,9 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
                                 <SQExample>{el.output}</SQExample>
                             </div>
                         ))}
-                        <a href={URL.getObjectURL(new File([testCase], questions[selectedQIndex].name+"TestCase.txt"))}
+                        <a href={URL.createObjectURL(new File([testCase], questions[selectedQIndex].name+"TestCase.txt"))}
                         download={questions[selectedQIndex].name+"TestCase.txt"}
-                        style={{display : showDlLink ? 'inline-block' : 'none'}} > 
+                        /*style={{display : showDlLink ? 'inline-block' : 'none'}}*/ > 
                             Download Your Own Testcase 
                         </a>
                         <SubmitTitle>ارسال پاسخ</SubmitTitle>

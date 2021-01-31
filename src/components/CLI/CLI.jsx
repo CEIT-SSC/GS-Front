@@ -9,13 +9,18 @@ import * as actions from '../../store/actions';
 const CLI = props => {
     const terminal = React.createRef();
     const inputRef = React.createRef();
+    const dlRef=React.createRef();
     const [file, setFile] = useState(null);
     const [qToSubmit, setQToSubmit] = useState(null);
     const [qIndex, setQIndex] = useState(null);
+    const [testcaseNum, setTestcaseNum] = useState(null);
     const {upFileSuc, upFileErr, jokesToShow, jokesSuccess, jokesErr , error, token ,username, isAuthenticated, 
-    questions,questionsSuccess,questionsErr , scores , scoresSuccess , scoresError } = props;
+    questions,questionsSuccess,questionsErr , scores , scoresSuccess , scoresError, testCase, testCaseSuccess } = props;
 
     const dispatch=useDispatch();
+    
+    let url = null;
+    let download=null;
     
     const getQuestion =(index) =>{
         if(questions===null){
@@ -35,6 +40,22 @@ const CLI = props => {
                 terminal.current.pushToStdout("Output : "+el.output);               
             });
     }}
+    
+    const getTestCase = (index) => {
+        if(questions===null){
+            setQIndex(index);
+            dispatch(actions.fetchUserQuestions(token));
+        }
+        else if(index <0 || index >=questions.length){
+            terminal.current.pushToStdout("Invalid Index");    
+        }
+        else {
+            const qel=questions[index];
+            console.log(qel);
+            dispatch(actions.getTestCase(qel._id,token));
+        }
+        setTestcaseNum(index);
+    }
 
     const commands = {
         /**
@@ -83,6 +104,13 @@ const CLI = props => {
             usage : 'getQuestion <number>',
             fn : function (arg) {
                 getQuestion(arg-1);
+            }
+        },
+        getTestCase :{
+            description:"get your unique test case of a question",
+            usage:'getTestCase <number>',
+            fn: function(arg){
+                getTestCase(arg-1);
             }
         },
         scoreBoard : {
@@ -218,8 +246,18 @@ const CLI = props => {
         }
     }, [scoresError])
 
+    useEffect (()=> {
+        if(testCase!==null){
+            url=URL.createObjectURL(new File([testCase], questions[testcaseNum].name+"TestCase.txt"));
+            download=questions[testcaseNum].name+"TestCase.txt";
+            dlRef.current.click();
+            testCase=null;
+        }
+    },[testCase])
+
     return (
-        <>
+        <>  
+                        
             <input type="file" multiple
                 style={{ display: 'none' }}
                 ref={inputRef}
@@ -254,7 +292,9 @@ const mapStateToProps = (state) => {
         questionsErr : state.userQuestions.error,
         scores: state.getScoreBoard.scores,
         scoresSuccess: state.getScoreBoard.success , 
-        scoresError: state.getScoreBoard.error
+        scoresError: state.getScoreBoard.error , 
+        testCase: state.getTestCase.testCase,
+        testCaseSuccess: state.getTestCase.success
     }
 }
 

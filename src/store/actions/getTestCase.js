@@ -24,21 +24,21 @@ export const testCaseGetFail = (error) => {
 
 export const getTestCase = (id , token) => {
     return (dispatch) => {
-        dispatch(testCaseGetStart());
+        // dispatch(testCaseGetStart());
         const sendReq = async () => {
             try {
+                dispatch(testCaseGetStart());
                 const response = await axios.get("/question/" +  id + "/testcase" , {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                console.log(response);
-                const testCase = null;
-                testCase = response.data;
+                const testCase = response.data.blob();
                 dispatch(testCaseGetSuccess(testCase));
             }
             catch (error) {
-                dispatch(testCaseGetFail(error))
+                dispatch(testCaseGetFail(error));
+                console.log(error);
             }
         }
         sendReq();
