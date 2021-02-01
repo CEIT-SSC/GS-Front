@@ -13,7 +13,8 @@ const GUI = props => {
 
     const [formValues, setFormValues] = useState({
         username: '',
-        password: ''
+        password: '',
+        signin:false
     })
     const [selectedQIndex, setSelectedQIndex] = useState(0);
     const { token, authError, authLoading, questionsLoading, questionsErr, questions } = props;
@@ -28,8 +29,11 @@ const GUI = props => {
         const updatedForm = { ...formValues };
         if (index === 0) {
             updatedForm.username = event.target.value;
-        } else {
+        } else if(index===1) {
             updatedForm.password = event.target.value;
+        }
+        else{
+            updatedForm.signin=!updatedForm.signin;
         }
         setFormValues(updatedForm);
     }
@@ -40,7 +44,8 @@ const GUI = props => {
             studentNumber: formValues.username,
             password: formValues.password
         };
-        dispatch(actions.authUser(userData));
+        if(formValues.signin) dispatch(actions.userSignin(userData));
+        else dispatch(actions.authUser(userData));
     }
 
     let content = null;

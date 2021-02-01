@@ -13,7 +13,7 @@ const UserLoginForm = ({loading, error, onSubmitHandler, formValues, inputChange
             label: 'Password',
             type: 'password',
             placeholder: 'Enter password'
-        }
+        },
     ];
 
     
@@ -40,6 +40,13 @@ const UserLoginForm = ({loading, error, onSubmitHandler, formValues, inputChange
                                 required></Form.Control>
                         </Form.Group>
                     ))}
+                    <div style={{marginBottom:'5px', color:'gray'}}>
+                        sign in as a new user
+                        <input 
+                            type='checkbox'
+                            onChange={(event)=>inputChangeHandler(event,2)}
+                            style={{marginLeft:'5px', marginTop:'3px'}}/>
+                    </div>
                     <Button variant="primary" type="submit" block>
                         {loading ? <Spinner animation="border" style={{ height: '23px', width: '23px' }} /> : 'Submit'}
                     </Button>
@@ -48,5 +55,10 @@ const UserLoginForm = ({loading, error, onSubmitHandler, formValues, inputChange
         </Card>
     );
 };
-
+/*<Form.Group>
+                        <Form.Control
+                            type='checkbox'
+                            onChange={(event)=>inputChangeHandler(event,2)}
+                        ></Form.Control>
+                    </Form.Group>*/
 export default UserLoginForm;

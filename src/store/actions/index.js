@@ -8,7 +8,8 @@ export {
 
 export {
     authUser,
-    logoutUser
+    logoutUser,
+    userSignin
 } from './userAuth'
 
 export {

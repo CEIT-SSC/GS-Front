@@ -29,6 +29,7 @@ export const logoutSuccess = () => {
     }
 }
 
+
 export const authUser = (userData) => {
     return dispatch => {
         dispatch(authStart());
@@ -43,6 +44,20 @@ export const authUser = (userData) => {
                 dispatch(authFail(error));
             });
     }
+}
+
+export const userSignin = (userData) =>{
+    return dispatch => {
+        dispatch(authStart());
+        axios.post("/user" , userData)
+            .then(response => {
+                console.log(response);
+                dispatch(authSuccess(response.data.token,response.data.user.studentNumber));
+            })
+            .catch(error => {
+                dispatch(authFail(error));
+            });
+    }   
 }
 
 export const logoutUser = (token) => {
