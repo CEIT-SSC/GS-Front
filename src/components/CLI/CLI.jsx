@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import Terminal from 'react-console-emulator';
 import { Container, Row, Col } from 'react-bootstrap';
+import download from 'downloadjs';
 
 
 import * as actions from '../../store/actions';
@@ -20,7 +21,6 @@ const CLI = props => {
     const dispatch=useDispatch();
     
     let url = null;
-    let download=null;
     
     const getQuestion =(index) =>{
         if(questions===null){
@@ -176,6 +176,7 @@ const CLI = props => {
     useEffect(() => {
         if(jokesToShow != null){
             terminal.current.pushToStdout(jokesToShow);
+            // download(jokesToShow, "jokes.txt" , "text/plain");
         }
     },[jokesSuccess])
 
@@ -246,14 +247,14 @@ const CLI = props => {
         }
     }, [scoresError])
 
-    useEffect (()=> {
-        if(testCase!==null){
-            url=URL.createObjectURL(new File([testCase], questions[testcaseNum].name+"TestCase.txt"));
-            download=questions[testcaseNum].name+"TestCase.txt";
-            dlRef.current.click();
-            testCase=null;
-        }
-    },[testCase])
+    // useEffect (()=> {
+    //     if(testCase!==null){
+    //         url=URL.createObjectURL(new File([testCase], questions[testcaseNum].name+"TestCase.txt"));
+    //         download=questions[testcaseNum].name+"TestCase.txt";
+    //         dlRef.current.click();
+    //         testCase=null;
+    //     }
+    // },[testCase])
 
     return (
         <>  

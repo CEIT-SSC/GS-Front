@@ -1,5 +1,6 @@
 import * as actions from './actionTypes';
 import axios from '../../api/axios';
+import download from 'downloadjs';
 
 
 export const testCaseGetStart = () => {
@@ -33,7 +34,9 @@ export const getTestCase = (id , token) => {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                const testCase = response.data.blob();
+                console.log(response);
+                const testCase = response.data;
+                download(testCase,"tescase.txt","text/text");
                 dispatch(testCaseGetSuccess(testCase));
             }
             catch (error) {
