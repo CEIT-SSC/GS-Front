@@ -24,6 +24,10 @@ export const AUTH_START = 'AUTH_START';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const USER_AUTH_START = 'USER_AUTH_START';
+export const USER_AUTH_SUCCESS = 'USER_AUTH_SUCCESS';
+export const USER_AUTH_FAIL = 'USER_AUTH_FAIL';
+export const USER_AUTH_LOGOUT = 'USER_AUTH_LOGOUT';
 
 
 export const USER_START = 'USER_START';

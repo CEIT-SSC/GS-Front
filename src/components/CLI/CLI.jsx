@@ -60,15 +60,15 @@ const CLI = props => {
                 inputRef.current.click();
             }
         },
-        signin:{
-            description: 'sign in as a user',
-            usage : 'signin <studentNumber> <password>',
+        signup:{
+            description: 'register to the General Skills event.',
+            usage : 'signup <studentNumber> <password>',
             fn : function (arg1,arg2){
                 const userData = {
                     studentNumber: arg1,
                     password: arg2
                 };
-                dispatch(actions.userSignin(userData));
+                dispatch(actions.userSignUp(userData));
             } 
         },
         login : {
