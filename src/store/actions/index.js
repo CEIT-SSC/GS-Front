@@ -9,7 +9,7 @@ export {
 export {
     authUser,
     logoutUser,
-    userSignin
+    userSignUp
 } from './userAuth'
 
 export {

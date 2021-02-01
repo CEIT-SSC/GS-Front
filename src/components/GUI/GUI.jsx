@@ -11,13 +11,8 @@ const GUI = props => {
 
     const dispatch = useDispatch();
 
-    const [formValues, setFormValues] = useState({
-        username: '',
-        password: '',
-        signin:false
-    })
     const [selectedQIndex, setSelectedQIndex] = useState(0);
-    const { token, authError, authLoading, questionsLoading, questionsErr, questions } = props;
+    const { token, questionsLoading, questionsErr, questions } = props;
 
     useEffect(() => {
         if (token != null) {
@@ -25,38 +20,9 @@ const GUI = props => {
         }
     }, [token, dispatch])
 
-    const inputChangeHandler = (event, index) => {
-        const updatedForm = { ...formValues };
-        if (index === 0) {
-            updatedForm.username = event.target.value;
-        } else if(index===1) {
-            updatedForm.password = event.target.value;
-        }
-        else{
-            updatedForm.signin=!updatedForm.signin;
-        }
-        setFormValues(updatedForm);
-    }
-
-    const loginSubmitHandler = (event) => {
-        event.preventDefault();
-        const userData = {
-            studentNumber: formValues.username,
-            password: formValues.password
-        };
-        if(formValues.signin) dispatch(actions.userSignin(userData));
-        else dispatch(actions.authUser(userData));
-    }
-
     let content = null;
     if (token === null) {
-        content = <UserLoginForm
-            loading={authLoading}
-            error={authError}
-            onSubmitHandler={loginSubmitHandler}
-            formValues={formValues}
-            inputChangeHandler={inputChangeHandler}
-        />
+        content = <UserLoginForm />
     } else {
         if (questionsLoading) {
             content = <Spinner animation="border" />
@@ -83,9 +49,7 @@ const mapStateToProps = (state) => {
     return {
         upFileSuc: state.fileUploader.success,
         upFileErr: state.fileUploader.error,
-        authError: state.userAuth.error,
         token: state.userAuth.token,
-        authLoading: state.userAuth.loading,
         username: state.userAuth.username,
         questions: state.userQuestions.questions,
         questionsSuccess: state.userQuestions.success,
