@@ -215,7 +215,14 @@ const CLI = props => {
 
     useEffect (()=>{
         if(scores){
-            scores.forEach((el,index) => {
+            terminal.current.pushToStdout("newbies:");
+            scores.newbies.forEach((el,index) => {
+                terminal.current.pushToStdout("Rank number "+(index+1)+ " :");
+                terminal.current.pushToStdout("StudentNumber: " +el.studentNumber + " Penalty: " + el.penalty + " Score: " + el.score);
+                console.log(el);
+            });
+            terminal.current.pushToStdout("notNoobs:");
+            scores.notNoob.forEach((el,index) => {
                 terminal.current.pushToStdout("Rank number "+(index+1)+ " :");
                 terminal.current.pushToStdout("StudentNumber: " +el.studentNumber + " Penalty: " + el.penalty + " Score: " + el.score);
                 console.log(el);
