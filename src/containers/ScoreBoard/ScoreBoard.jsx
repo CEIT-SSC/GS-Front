@@ -1,6 +1,6 @@
-import React from 'react';
+import React , { useState}from 'react';
 import { useDispatch, connect } from 'react-redux';
-import {Table, Row, Col} from 'react-bootstrap';
+import {Table, Row, Col,Button} from 'react-bootstrap';
 import {MainContainer , ListContainer} from './ScoreBoardStyle';
 
 import * as actions from '../../store/actions';
@@ -9,11 +9,31 @@ import * as actions from '../../store/actions';
 const ScoreBoard = (props) => {
 
     const dispatch=useDispatch();
+    const [show99,setShow99] =useState(false);
     const {scores , username} = props;
-    let dataList = null;
+    let dataList=null;
     
-    if(scores !== null){
-        dataList= scores.map((el, index) => (
+    const changeScoresHandler= (event) => {
+        const show=!show99;
+        setShow99(show);
+        
+    }
+
+    if(scores === null){
+        dispatch(actions.getScoreBoard());
+    }
+    else{
+        if(show99)
+        dataList= scores.newbies.map((el, index) => (
+            <tr style={{backgroundColor: (username!==null && username===el.studentNumber) ? 'yellow' : 'white'}}>
+                <th>{index+1}</th>
+                <th>{el.studentNumber}</th>
+                <th>{el.penalty}</th>
+                <th>{el.score}</th>
+            </tr>
+        ))
+        else
+        dataList= scores.notNoob.map((el, index) => (
             <tr style={{backgroundColor: (username!==null && username===el.studentNumber) ? 'yellow' : 'white'}}>
                 <th>{index+1}</th>
                 <th>{el.studentNumber}</th>
@@ -23,16 +43,17 @@ const ScoreBoard = (props) => {
         ))
     }
 
-    if(scores === null){
-        dispatch(actions.getScoreBoard());
-    }
-
     return (
         <MainContainer> 
             <Row>
                 <Col>
                     <ListContainer>
-                        <h1> ScoreBoard</h1>
+                        <div style={{display:'flex',justifyContent:'space-between',marginBottom:'5px'}}>    
+                            <h1> ScoreBoard</h1>
+                            <Button onClick={(event)=>changeScoresHandler(event)}>
+                                {show99 ? 'Elders:)':'Youngers:)'}
+                            </Button> 
+                        </div>
                         <Table>
                             <thead>
                                 <tr>
