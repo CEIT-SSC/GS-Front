@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Row, Col, Form, Button, Alert, Spinner } from 'react-bootstrap';
+import {FaHourglassStart} from 'react-icons/fa'
 
 import * as actions from '../../store/actions';
 import {
@@ -18,7 +19,10 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
     const [showSuccess, setShowSuccess] = useState(true);
 
     const dispatch = useDispatch();
-    const selectedQuestion = questions[selectedQIndex];
+    let selectedQuestion=null ; 
+    if(selectedQIndex>=0 && selectedQIndex<questions.length) selectedQuestion=questions[selectedQIndex];
+    console.log(selectedQIndex);
+    console.log(selectedQuestion);
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
@@ -47,7 +51,9 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
                 <Col md={4}>
                     <QTableContainer>
                         <QTableTitle>سوالات</QTableTitle>
-                        {questions.map((q, index) => (
+                        {questions.length===0 ? <div 
+                        style={{direction:'rtl', paddingRight:'2px'}}>هنوز سوالی تعریف نشده</div>:
+                        questions.map((q, index) => (
                             <QTableEl key={q._id}
                                 onClick={() => {clickHandler(index)}}
                                 active={index === selectedQIndex}>
@@ -62,7 +68,10 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
 
                 </Col>
                 <Col md={8}>
-                    <SQContainer>
+                    {selectedQuestion===null ?  <div style={{width:'100%' , fontSize:'300px',heigh:'100%',alignItems:'center',
+                justifyContent:'center',display:'flex' , color:'#80808045',paddingTop:'50%',paddingBottom:'10%'}}>
+                        <FaHourglassStart></FaHourglassStart>
+                    </div>:<SQContainer>
                         <SQTitle>{selectedQuestion.name}</SQTitle>
                         <SQBody>{selectedQuestion.body}</SQBody>
                         {selectedQuestion.examples.map((el, index) => (
@@ -96,7 +105,7 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
                                 {loading ? <Spinner animation="border" style={{ height: '23px', width: '23px' }} /> : 'ارسال پاسخ'}
                             </Button>
                         </Form>
-                    </SQContainer>
+                    </SQContainer>}
                 </Col>
 
             </Row>

@@ -60,9 +60,9 @@ const CLI = props => {
                 inputRef.current.click();
             }
         },
-        signin:{
-            description: 'sign in as a user',
-            usage : 'signin <studentNumber> <password>',
+        signup:{
+            description: 'register',
+            usage : 'signup <studentNumber> <password>',
             fn : function (arg1,arg2){
                 const userData = {
                     studentNumber: arg1,
@@ -159,6 +159,10 @@ const CLI = props => {
     useEffect(() => {
         if(jokesToShow != null){
             terminal.current.pushToStdout(jokesToShow);
+        }
+        else if(jokesSuccess) {
+            terminal.current.pushToStdout("mention the required number of jokes");
+            terminal.current.pushToStdout("valid command: jokes <number>");
         }
     },[jokesSuccess])
 

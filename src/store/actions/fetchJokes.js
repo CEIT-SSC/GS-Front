@@ -27,8 +27,13 @@ export const fetchJokes = (arg) => {
         dispatch(jokesFetchStart());
         const sendReq = async () => {
             try {
-                const response = await axios.get("http://api.icndb.com/jokes/random/" + arg);
-                const jokes = response.data.value.map(el => el.joke + "\n");
+                let jokes=null;
+                const url="http://api.icndb.com/jokes/random/" + arg;
+                if(url==="http://api.icndb.com/jokes/random/undefined") arg=null;
+                const response = await axios.get(url);
+                console.log(response);
+                if(arg===null) jokes=null;
+                else jokes = response.data.value.map(el => el.joke + "\n");
                 dispatch(jokesFetchSuccess(jokes));
             }
             catch (error) {
