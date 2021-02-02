@@ -4,13 +4,13 @@ import axios from '../../api/axios';
 
 export const authStart = () => {
     return {
-        type: actionTypes.AUTH_START
+        type: actionTypes.USER_AUTH_START
     }
 }
 
 export const authSuccess = (token, username) => {
     return {
-        type: actionTypes.AUTH_SUCCESS,
+        type: actionTypes.USER_AUTH_SUCCESS,
         username,
         token
     }
@@ -18,14 +18,14 @@ export const authSuccess = (token, username) => {
 
 export const authFail = (error) => {
     return {
-        type: actionTypes.AUTH_FAIL,
+        type: actionTypes.USER_AUTH_FAIL,
         error
     }
 }
 
 export const logoutSuccess = () => {
     return {
-        type: actionTypes.AUTH_LOGOUT
+        type: actionTypes.USER_AUTH_LOGOUT
     }
 }
 
@@ -46,16 +46,17 @@ export const authUser = (userData) => {
     }
 }
 
-export const userSignin = (userData) =>{
+export const userSignUp = (userData) =>{
     return dispatch => {
         dispatch(authStart());
-        axios.post("/user" , userData)
+        axios.post("/user/" , userData)
             .then(response => {
                 console.log(response);
                 dispatch(authSuccess(response.data.token,response.data.user.studentNumber));
             })
             .catch(error => {
-                dispatch(authFail(error));
+                console.log(error.response);
+                dispatch(authFail(error.response));
             });
     }   
 }

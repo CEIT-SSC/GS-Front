@@ -62,13 +62,14 @@ const CLI = props => {
         },
         signup:{
             description: 'register',
+            description: 'register to the General Skills event.',
             usage : 'signup <studentNumber> <password>',
             fn : function (arg1,arg2){
                 const userData = {
                     studentNumber: arg1,
                     password: arg2
                 };
-                dispatch(actions.userSignin(userData));
+                dispatch(actions.userSignUp(userData));
             } 
         },
         login : {
