@@ -3,15 +3,9 @@ import { Form, Button, Spinner, Container, Card, Row, Col, Alert } from 'react-b
 
 const QuestionForm = (props) => {
 
-    const {edit, loading, error, formValues, setFormValues, examples, setExamples,questionType,setQuestionType, onSubmitHandler } = props;
+    const {edit, loading, error, formValues, setFormValues, examples, setExamples, onSubmitHandler } = props;
     
     const [formElements] = useState([
-        {
-            type: 'datetime-local',
-            label: 'For Date',
-            placeholder: '',
-            required: true
-        },
         {
             type: 'text',
             label: 'Name',
@@ -22,6 +16,28 @@ const QuestionForm = (props) => {
             type: 'textarea',
             label: 'Body',
             placeholder: 'Enter question body',
+            required: true
+        },
+        {
+            type: 'select',
+            label: 'Type',
+            placeholder: '',
+            required: true,
+            options: [
+                {
+                    value: false,
+                    label: 'Normal Question'
+                },
+                {
+                    value: true,
+                    label: 'Web Question'
+                }
+            ]
+        },
+        {
+            type: 'datetime-local',
+            label: 'For Date',
+            placeholder: '',
             required: true
         },
         {
@@ -74,12 +90,17 @@ const QuestionForm = (props) => {
                                     <Form.Label>{element.label}</Form.Label>
                                     <Form.Control
                                         type={element.type}
-                                        as={element.type === 'textarea' ? 'textarea' : 'input'}
+                                        as={element.type === 'textarea' ? 'textarea' : element.type === 'select' ? 'select' : 'input'}
                                         label={element.label}
                                         placeholder={element.placeholder}
                                         value={element.type === 'file' ? formValues[index].value : formValues[index]}
                                         onChange={(event) => inputChangeHandler(event, index)}
-                                        required={element.required}></Form.Control>
+                                        required={element.required}>
+                                            {element.options ? 
+                                            element.options.map(el => (
+                                                <option key={el.label} value={el.value}>{el.label}</option>
+                                            )) : null}
+                                        </Form.Control>
                                 </Form.Group>
                             ))}
                             <Form.Group>
@@ -109,20 +130,6 @@ const QuestionForm = (props) => {
                                     </Form.Group>
                                 ))}
                                 <Button variant="primary" onClick={() => { setExamples([...examples, { input: '', output: '' }]) }}>Add Example</Button>
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Control as="select" value={questionType} onChange={(event) => {
-                                    if(event.target.value==='Web Question'){
-                                        setQuestionType(true);
-                                        console.log(questionType);
-                                    }
-                                    else{
-                                        setQuestionType(false);
-                                    }
-                                }}>
-                                    <option>Normal Question</option>
-                                    <option>Web Question</option>
-                                </Form.Control>
                             </Form.Group>
 
                             <Button variant="primary" type="submit" block>

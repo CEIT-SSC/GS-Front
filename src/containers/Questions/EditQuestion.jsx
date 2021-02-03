@@ -20,22 +20,22 @@ const EditQuestion = (props) => {
     date = new Date(date.getTime() - (offset*60*1000))
     const forDate = date.toISOString().slice(0, -1);
 
-    const [formValues, setFormValues] = useState([forDate, questionToEdit.name, questionToEdit.body, questionToEdit.score, '', '']);
+    const [formValues, setFormValues] = useState([ questionToEdit.name, questionToEdit.body, questionToEdit.isWeb, forDate ,questionToEdit.score, '', '']);
 
     const submitHandler = (event) => {
         event.preventDefault();
         const bodyFormData = new FormData();
-        console.log(new Date(formValues[0]).getTime());
-        bodyFormData.append('forDate', new Date(formValues[0]).getTime());
-        bodyFormData.append('name', formValues[1]);
-        bodyFormData.append('body', formValues[2]);
-        bodyFormData.append('score', formValues[3]);
-        if(formValues[4].value && formValues[4].value !== ''){
-            console.log(formValues[4].value);
-            bodyFormData.append('testGenerator', formValues[4].files[0]);
-        }
+        bodyFormData.append('name', formValues[0]);
+        bodyFormData.append('body', formValues[1]);
+        bodyFormData.append('isWeb', formValues[2]);
+        bodyFormData.append('date', new Date(formValues[3]).getTime());
+        bodyFormData.append('score', formValues[4]);
         if(formValues[5].value && formValues[5].value !== ''){
-            bodyFormData.append('answer', formValues[5].files[0]);
+            console.log(formValues[5].files[0]);
+            bodyFormData.append('testGenerator', formValues[5].files[0]);
+        }
+        if(formValues[6].value && formValues[6].value !== ''){
+            bodyFormData.append('answer', formValues[6].files[0]);
         }
         bodyFormData.append('examples', JSON.stringify(examples));
         dispatch(actions.editQuestion(token, bodyFormData, questionToEdit._id));
