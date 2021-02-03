@@ -3,7 +3,7 @@ import { Form, Button, Spinner, Container, Card, Row, Col, Alert } from 'react-b
 
 const QuestionForm = (props) => {
 
-    const {edit, loading, error, formValues, setFormValues, examples, setExamples, onSubmitHandler } = props;
+    const {edit, loading, error, formValues, setFormValues, examples, setExamples,questionType,setQuestionType, onSubmitHandler } = props;
     
     const [formElements] = useState([
         {
@@ -109,6 +109,20 @@ const QuestionForm = (props) => {
                                     </Form.Group>
                                 ))}
                                 <Button variant="primary" onClick={() => { setExamples([...examples, { input: '', output: '' }]) }}>Add Example</Button>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control as="select" value={questionType} onChange={(event) => {
+                                    if(event.target.value==='Web Question'){
+                                        setQuestionType(true);
+                                        console.log(questionType);
+                                    }
+                                    else{
+                                        setQuestionType(false);
+                                    }
+                                }}>
+                                    <option>Normal Question</option>
+                                    <option>Web Question</option>
+                                </Form.Control>
                             </Form.Group>
 
                             <Button variant="primary" type="submit" block>

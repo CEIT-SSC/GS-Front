@@ -17,7 +17,6 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
     //these two are used to show error and success alerts only for the related question not all of them.
     const [showError, setShowError] = useState(true);
     const [showSuccess, setShowSuccess] = useState(true);
-    const [showDlLink , setShowDlLink] = useState(false);
 
     const dispatch = useDispatch();
     const selectedQuestion = questions[selectedQIndex];
@@ -40,19 +39,15 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
 
     const dlTestcaseHandler = (event) => {
         event.preventDefault();
-        dispatch(actions.getTestCase(questions[selectedQIndex]._id, token));
+        dispatch(actions.getTestCase(questions[selectedQIndex]._id,questions[selectedQIndex].name, token));
     }
 
     const clickHandler = (index) => {
         setShowError(false);
         setShowSuccess(false);
         qClickHandler(index);
-        setShowDlLink(false);
-        dispatch(actions.getTestCase(questions[selectedQIndex]._id, token));
     }
-    // if(testCase){
-    //     setShowDlLink(true);
-    // }
+    
 
     return (
         <Container>
@@ -86,11 +81,11 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
                                 <SQExample>{el.output}</SQExample>
                             </div>
                         ))}
-                        <a href={URL.createObjectURL(new File([testCase], questions[selectedQIndex].name+"TestCase.txt"))}
-                        download={questions[selectedQIndex].name+"TestCase.txt"}
-                        /*style={{display : showDlLink ? 'inline-block' : 'none'}}*/ > 
-                            Download Your Own Testcase 
-                        </a>
+                        <Button onClick={(event)=>{dlTestcaseHandler(event)}}
+                        style={{marginTop:'10px', width:'100%'}}
+                        >
+                            تست کیس منحصر به خود را دانلود کنید
+                        </Button>
                         <SubmitTitle>ارسال پاسخ</SubmitTitle>
                         {(success && showSuccess) && <Alert variant="success">Question submitted successfully</Alert>}
                         {(error && showError) && <Alert variant="danger">{error.message}</Alert>}

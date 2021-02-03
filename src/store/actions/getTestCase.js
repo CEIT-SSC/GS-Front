@@ -23,7 +23,7 @@ export const testCaseGetFail = (error) => {
     }
 }
 
-export const getTestCase = (id , token) => {
+export const getTestCase = (id ,name, token) => {
     return (dispatch) => {
         // dispatch(testCaseGetStart());
         const sendReq = async () => {
@@ -36,7 +36,7 @@ export const getTestCase = (id , token) => {
                 });
                 console.log(response);
                 const testCase = response.data;
-                download(testCase,"tescase.txt","text/text");
+                download(testCase,name+"tescase.txt","text/text");
                 dispatch(testCaseGetSuccess(testCase));
             }
             catch (error) {

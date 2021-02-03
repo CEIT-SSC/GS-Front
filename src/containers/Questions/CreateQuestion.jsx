@@ -15,6 +15,7 @@ const CreateQuestion = (props) => {
     const { loading, token, success, error } = props;
   
     const [formValues, setFormValues] = useState(['', '', '', '', '', '']);
+    const [questionType,setQuestionType] = useState(false);
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -25,6 +26,7 @@ const CreateQuestion = (props) => {
         bodyFormData.append('score', formValues[3]);
         bodyFormData.append('testGenerator', formValues[4].files[0]);
         bodyFormData.append('answer', formValues[5].files[0]);
+        bodyFormData.append('isWeb', questionType);
         bodyFormData.append('examples', JSON.stringify(examples));
         dispatch(actions.addQuestion(token, bodyFormData));
     }
@@ -42,6 +44,8 @@ const CreateQuestion = (props) => {
             setFormValues={setFormValues}
             examples={examples}
             setExamples={setExamples}
+            questionType={questionType}
+            setQuestionType={setQuestionType}
             onSubmitHandler={submitHandler}
         />
     )
