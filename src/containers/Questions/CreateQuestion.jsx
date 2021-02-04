@@ -23,7 +23,7 @@ const CreateQuestion = (props) => {
      * index: 5 testGenerator
      * index: 6 answer
      */
-    const [formValues, setFormValues] = useState(['', '', '', '', '', '', '']);
+    const [formValues, setFormValues] = useState(['', '', 'false', '', '', '', '']);
 
     const submitHandler = (event) => {
         event.preventDefault();
