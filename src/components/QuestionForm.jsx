@@ -84,7 +84,7 @@ const QuestionForm = (props) => {
                         <Form style={{ padding: '20px' }}
                             onSubmit={onSubmitHandler}
                         >
-                            {error && <Alert variant="danger">{error.message}</Alert>}
+                            {error && <Alert variant="danger">{error}</Alert>}
                             {formElements.map((element, index) => (
                                 <Form.Group key={index}>
                                     <Form.Label>{element.label}</Form.Label>

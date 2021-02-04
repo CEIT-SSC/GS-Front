@@ -33,6 +33,8 @@ export const uploadFile = (data, token) => {
             .then(res => { 
                 dispatch(fileUploadSuccess(data));
             })
-            .catch(err => { dispatch(fileUploadFailure(err)) })
+            .catch(error => { 
+                dispatch(fileUploadFailure(error.response && error.response.data.error ? error.response.data.error : error.message))
+             })
     }
 }

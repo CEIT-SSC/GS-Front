@@ -37,7 +37,7 @@ export const fetchJokes = (arg) => {
                 dispatch(jokesFetchSuccess(jokes));
             }
             catch (error) {
-                dispatch(jokesFetchFailure(error))
+                dispatch(jokesFetchFailure(error.response && error.response.data.error ? error.response.data.error : error.message))
             }
         }
         sendReq();

@@ -116,7 +116,7 @@ const UserLoginForm = ({ loading, error }) => {
                 <Card.Title className="text-center" style={{ fontSize: '26px' }}>{isSignUp ? 'Register' : 'Login'}</Card.Title>
                 {errorToShow != null ?
                         <Alert variant={'danger'}>
-                            {errorToShow.message}
+                            {errorToShow}
                         </Alert> : null}
                 {form}
             </Card.Body>

@@ -88,7 +88,7 @@ const UserAdminList = (props) => {
                                 </h1>
                                 <AddNewBtn color="#2da829" style={{ fontWeight: 'bold' }} onClick={onAddClick}>Add New </AddNewBtn>
                             </Header>
-                            {error && <Alert variant="danger">{error.message}</Alert>}
+                            {error && <Alert variant="danger">{error}</Alert>}
                             {loading ? <Spinner animation="border" /> : null}
                             {dataList}
                         </ListContainer>

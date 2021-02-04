@@ -27,7 +27,7 @@ const GUI = props => {
         if (questionsLoading) {
             content = <Spinner animation="border" />
         } else if (questionsErr) {
-            content = <Alert variant="danger">{questionsErr.message}</Alert>
+            content = <Alert variant="danger">{questionsErr}</Alert>
         } else if (questions) {
             content = <GUIQuestions 
                 questions={questions}
@@ -47,12 +47,8 @@ const GUI = props => {
 
 const mapStateToProps = (state) => {
     return {
-        upFileSuc: state.fileUploader.success,
-        upFileErr: state.fileUploader.error,
         token: state.userAuth.token,
-        username: state.userAuth.username,
         questions: state.userQuestions.questions,
-        questionsSuccess: state.userQuestions.success,
         questionsErr: state.userQuestions.error,
         questionsLoading: state.userQuestions.loading,
     }

@@ -53,7 +53,7 @@ const AdminLogin = props => {
                     <Card.Title className="text-center" style={{ fontSize: '26px' }}>Login</Card.Title>
                     {error != null ?
                         <Alert variant={'danger'}>
-                            {error.message}
+                            {error}
                         </Alert> : null}
                     <Form
                         onSubmit={signinSubmitHandler}

@@ -50,7 +50,7 @@ export const getQuestions = (token) => dispatch => {
             dispatch(fetchQestionsSuccess(response.data));
         })
         .catch(error => {
-            dispatch(fetchQestionsFail(error));
+            dispatch(fetchQestionsFail(error.response && error.response.data.error ? error.response.data.error : error.message));
         });
 }
 
@@ -64,8 +64,7 @@ export const addQuestion = (token, data) => dispatch => {
     })
     .then(response => {dispatch(createQuestionSuccess())})
     .catch(error => {
-        console.log(error);
-        dispatch(createQuestionFail(error));
+        dispatch(createQuestionFail(error.response && error.response.data.error ? error.response.data.error : error.message));
     });
 }
 
@@ -78,7 +77,7 @@ export const deleteQuestion = (token, id) => dispatch => {
     })
     .then(response => {dispatch(getQuestions(token))})
     .catch(error => {
-     dispatch(fetchQestionsFail(error));
+     dispatch(fetchQestionsFail(error.response && error.response.data.error ? error.response.data.error : error.message));
     });
     
 }
@@ -92,7 +91,7 @@ export const editQuestion = (token, data, id) => dispatch => {
     })
     .then(response => {dispatch(editQuestionSuccess())})
     .catch(error => {
-     dispatch(editQuestionFail(error));
+     dispatch(editQuestionFail(error.response && error.response.data.error ? error.response.data.error : error.message));
     });
 } 
 

@@ -30,7 +30,7 @@ export const fetchUserQuestions = (token) => {
                 dispatch(questionsFetchSuccess(response.data));
             }
             catch (error) {
-                dispatch(questionsFetchFailure(error))
+                dispatch(questionsFetchFailure(error.response && error.response.data.error ? error.response.data.error : error.message))
             }
         }
         sendReq();

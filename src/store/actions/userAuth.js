@@ -38,7 +38,7 @@ export const authUser = (userData) => {
                 dispatch(authSuccess(response.data.token, response.data.user.studentNumber));
             })
             .catch(error => {
-                dispatch(authFail(error));
+                dispatch(authFail(error.response && error.response.data.error ? error.response.data.error : error.message));
             });
     }
 }
@@ -53,7 +53,7 @@ export const userSignUp = (userData) =>{
             })
             .catch(error => {
                 console.log(error.response);
-                dispatch(authFail(error.response));
+                dispatch(authFail(error.response && error.response.data.error ? error.response.data.error : error.message));
             });
     }   
 }
@@ -68,7 +68,7 @@ export const logoutUser = (token) => {
             });
             dispatch(logoutSuccess());
         } catch (error) {
-            console.log(error);
+            console.log(error.response && error.response.data.error ? error.response.data.error : error.message);
         }
     }
 }

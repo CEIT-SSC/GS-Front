@@ -34,7 +34,7 @@ export const getUsers = (token) => dispatch => {
             dispatch(userSuccess(response.data, 'user'));
         })
         .catch(error => {
-            dispatch(userFail(error));
+            dispatch(userFail(error.response && error.response.data.error ? error.response.data.error : error.message));
         });
 }
 
@@ -50,7 +50,7 @@ export const getQAdmins = (token) => dispatch => {
             dispatch(userSuccess(response.data, 'QAdmin'));
         })
         .catch(error => {
-            dispatch(userFail(error));
+            dispatch(userFail(error.response && error.response.data.error ? error.response.data.error : error.message));
         });
 }
 
@@ -64,8 +64,7 @@ export const addUser = (token,userData) => dispatch => {
     })
     .then(response => {dispatch(getUsers(token))})
     .catch(error => {
-        console.log(error);
-        dispatch(userFail(error));
+        dispatch(userFail(error.response && error.response.data.error ? error.response.data.error : error.message));
     });
 }
 
@@ -78,7 +77,7 @@ export const addQAdmin = (token,userData) => dispatch => {
     })
     .then(response => {dispatch(getQAdmins(token))})
     .catch(error => {
-     dispatch(userFail(error));
+     dispatch(userFail(error.response && error.response.data.error ? error.response.data.error : error.message));
     });
 }
 
@@ -91,7 +90,7 @@ export const deleteUser = (token,studentNumber) => dispatch => {
     })
     .then(response => {dispatch(getUsers(token))})
     .catch(error => {
-     dispatch(userFail(error));
+     dispatch(userFail(error.response && error.response.data.error ? error.response.data.error : error.message));
     });
     
 }
@@ -104,7 +103,7 @@ export const deleteQAdmin = (token,username) => dispatch => {
     })
     .then(response => {dispatch(getQAdmins(token))})
     .catch(error => {
-     dispatch(userFail(error));
+     dispatch(userFail(error.response && error.response.data.error ? error.response.data.error : error.message));
     });
 }
 
@@ -117,7 +116,7 @@ export const editUser = (token,userData, studentNumber) => dispatch => {
     })
     .then(response => {dispatch(getUsers(token))})
     .catch(error => {
-     dispatch(userFail(error));
+     dispatch(userFail(error.response && error.response.data.error ? error.response.data.error : error.message));
     });
 } 
 
@@ -131,7 +130,7 @@ export const editQAdmin = (token,adminData, username) => dispatch => {
     })
     .then(response => {dispatch(getQAdmins(token))})
     .catch(error => {
-     dispatch(userFail(error));
+     dispatch(userFail(error.response && error.response.data.error ? error.response.data.error : error.message));
     });
 }
 

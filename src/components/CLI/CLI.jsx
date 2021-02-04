@@ -134,7 +134,6 @@ const CLI = props => {
             description: 'log out',
             usage : 'logout' ,
             fn : function () {
-                console.log(token);
                 dispatch(actions.logoutUser(token));
             }
         }
@@ -147,7 +146,7 @@ const CLI = props => {
 
     useEffect (() =>{
         if(error!=null) {
-            terminal.current.pushToStdout(error.message);
+            terminal.current.pushToStdout(error);
         }
     },[error])
 
@@ -176,7 +175,7 @@ const CLI = props => {
 
     useEffect(() => {
         if(questionsErr != null){
-            terminal.current.pushToStdout(questionsErr.message);
+            terminal.current.pushToStdout(questionsErr);
         }
     },[questionsErr])
     
@@ -197,7 +196,7 @@ const CLI = props => {
 
     useEffect(() => {
         if(jokesErr != null){
-            terminal.current.pushToStdout(jokesErr.message);
+            terminal.current.pushToStdout(jokesErr);
         }
     },[jokesErr])
 
@@ -241,7 +240,7 @@ const CLI = props => {
 
     useEffect(() => {
         if(upFileErr != null){
-            terminal.current.pushToStdout(upFileErr.message);
+            terminal.current.pushToStdout(upFileErr);
         }
     }, [upFileErr])
 
@@ -264,7 +263,7 @@ const CLI = props => {
 
     useEffect (()=>{
         if(scoresError){
-            terminal.pushToStdout(scoresError.message);
+            terminal.pushToStdout(scoresError);
         }
     }, [scoresError])
 

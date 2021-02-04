@@ -33,7 +33,7 @@ export const getScoreBoard = (scores) => {
                 dispatch(scoreBoardGetSuccess(scores));
             }
             catch (error) {
-                dispatch(scoreBoardGetFail(error))
+                dispatch(scoreBoardGetFail(error.response && error.response.data.error ? error.response.data.error : error.message))
             }
         }
         sendReq();

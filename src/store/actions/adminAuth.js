@@ -41,7 +41,7 @@ export const authSuperAdmin = (userData, adminType) => {
                 dispatch(authSuccess(response.data.token, username));
             })
             .catch(error => {
-                dispatch(authFail(error));
+                dispatch(authFail(error.response && error.response.data.error ? error.response.data.error : error.message));
             });
     }
 }
@@ -57,7 +57,7 @@ export const logoutSuperAdmin = (token, adminType) => {
             });
             dispatch(logoutSuccess());
         } catch (error) {
-            console.log(error);
+            console.log(error.response && error.response.data.error ? error.response.data.error : error.message);
         }
     }
 }

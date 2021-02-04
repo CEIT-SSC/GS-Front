@@ -41,8 +41,7 @@ export const getTestCase = (id ,name, token, dirDownload) => {
                 dispatch(testCaseGetSuccess(testCase));
             }
             catch (error) {
-                dispatch(testCaseGetFail(error));
-                console.log(error);
+                dispatch(testCaseGetFail(error.response && error.response.data.error ? error.response.data.error : error.message));
             }
         }
         sendReq();

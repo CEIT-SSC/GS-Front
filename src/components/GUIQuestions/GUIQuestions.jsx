@@ -101,11 +101,11 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                             تست کیس منحصر به خود را دانلود کنید
                         </Button>
                             : testCaseError ?
-                                <Alert variant="danger">{testCaseError.message}</Alert>
+                                <Alert variant="danger">{testCaseError}</Alert>
                                 : null}
                         <SubmitTitle>ارسال پاسخ</SubmitTitle>
                         {(success && showSuccess) && <Alert variant="success">Question submitted successfully</Alert>}
-                        {(error && showError) && <Alert variant="danger">{error.message}</Alert>}
+                        {(error && showError) && <Alert variant="danger">{error}</Alert>}
                         <Form style={{ direction: 'rtl', textAlign: 'right' }}
                             onSubmit={onSubmitHandler}
                         >
