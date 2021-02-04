@@ -14,17 +14,27 @@ const CreateQuestion = (props) => {
 
     const { loading, token, success, error } = props;
   
-    const [formValues, setFormValues] = useState(['', '', '', '', '', '']);
+    /**
+     * index: 0 name
+     * index: 1 body
+     * index: 2 isWeb
+     * index: 3 date
+     * index: 4 score
+     * index: 5 testGenerator
+     * index: 6 answer
+     */
+    const [formValues, setFormValues] = useState(['', '', '', '', '', '', '']);
 
     const submitHandler = (event) => {
         event.preventDefault();
         const bodyFormData = new FormData();
-        bodyFormData.append('date', new Date(formValues[0]).getTime());
-        bodyFormData.append('name', formValues[1]);
-        bodyFormData.append('body', formValues[2]);
-        bodyFormData.append('score', formValues[3]);
-        bodyFormData.append('testGenerator', formValues[4].files[0]);
-        bodyFormData.append('answer', formValues[5].files[0]);
+        bodyFormData.append('name', formValues[0]);
+        bodyFormData.append('body', formValues[1]);
+        bodyFormData.append('isWeb', formValues[2]);
+        bodyFormData.append('date', new Date(formValues[3]).getTime());
+        bodyFormData.append('score', formValues[4]);
+        bodyFormData.append('testGenerator', formValues[5].files[0]);
+        bodyFormData.append('answer', formValues[6].files[0]);
         bodyFormData.append('examples', JSON.stringify(examples));
         dispatch(actions.addQuestion(token, bodyFormData));
     }

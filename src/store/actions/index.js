@@ -42,3 +42,7 @@ export {
 export {
     getScoreBoard
 } from './scoreBoard';
+
+export {
+    getTestCase
+} from './getTestCase';
