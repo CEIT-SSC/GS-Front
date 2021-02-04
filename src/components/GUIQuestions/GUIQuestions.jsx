@@ -65,7 +65,7 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                     <QTableContainer>
                         <QTableTitle>سوالات</QTableTitle>
                         {questions.length === 0 ? <div
-                            style={{ direction: 'rtl', paddingRight: '2px' }}>هنوز سوالی تعریف نشده</div> :
+                            style={{ direction: 'rtl', paddingRight: '2px', textAlign: 'right' }}>هنوز سوالی تعریف نشده</div> :
                             questions.map((q, index) => (
                                 <QTableEl key={q._id}
                                     onClick={() => { clickHandler(index) }}
@@ -82,8 +82,8 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                 </Col>
                 <Col md={8}>
                     {selectedQuestion === null ? <div style={{
-                        width: '100%', fontSize: '300px', heigh: '100%', alignItems: 'center',
-                        justifyContent: 'center', display: 'flex', color: '#80808045', paddingTop: '50%', paddingBottom: '10%'
+                        width: '100%', fontSize: '150px', heigh: '100%', alignItems: 'center',
+                        justifyContent: 'center', display: 'flex', color: '#80808045', paddingTop: '20%'
                     }}>
                         <FaHourglassStart></FaHourglassStart>
                     </div> : <SQContainer>
