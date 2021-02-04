@@ -14,5 +14,11 @@ export const ListContainer = styled.div`
     height: 80vh;
     overflow-y: scroll;
     border-radius: 10px;
+    @media(max-width: 768px){
+        h1 {
+            font-size: 26px;
+        }
+    }
+    filter: invert(${props => props.isdark ? 0.9 : 0}) hue-rotate(${props => props.isdark ? '180deg' : '0deg'});
 `
 

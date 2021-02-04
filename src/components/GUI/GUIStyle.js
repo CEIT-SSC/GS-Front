@@ -8,6 +8,7 @@ export const Container = styled(BSContainer)`
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    filter: invert(${props => props.isdark ? 0.9 : 0}) hue-rotate(${props => props.isdark ? '180deg' : '0deg'});
     @media (max-width: 576px){
         max-width: 95%;
     };

@@ -12,6 +12,7 @@ export const ListContainer = styled.div`
     margin: 10% 0;
     min-height: 80vh;
     border-radius: 10px;
+    filter: invert(${props => props.isdark ? 0.9 : 0}) hue-rotate(${props => props.isdark ? '180deg' : '0deg'});
 `
 
 export const Button = styled.button `

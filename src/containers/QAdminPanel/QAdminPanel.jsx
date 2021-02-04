@@ -9,7 +9,7 @@ const QAdminPanel = props => {
 
     const dispatch = useDispatch()
     const onLogout = (token, adminType) => dispatch(actions.logoutSuperAdmin(token, adminType));
-    const { token} = props;
+    const { token, theme } = props;
  
     const handleLogout = (event) => {
         onLogout(token, 'Question Admin');
@@ -21,21 +21,22 @@ const QAdminPanel = props => {
 
     return (
         <>
-            <Container>
+            <Container isdark={theme==='DARK'}>
                 <Navbar fixed="top" style={{ width: '100%' }}  >
                     <Button
                         onClick={handleLogout}
                         style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
                         variant="outline-danger">Log Out</Button>
                 </Navbar>
-                <MainButton to="/list/questions"> Questions  </MainButton>
+                <MainButton isdark={theme==='DARK'} to="/list/questions"> Questions  </MainButton>
             </Container>
         </>
     )
 }
 
 const mapStateToProps = (state) => ({
-    token: state.adminAuth.token
+    token: state.adminAuth.token,
+    theme: state.theme
 })
 
 export default connect(mapStateToProps)(QAdminPanel);

@@ -12,7 +12,7 @@ const GUI = props => {
     const dispatch = useDispatch();
 
     const [selectedQIndex, setSelectedQIndex] = useState(0);
-    const { token, questionsLoading, questionsErr, questions } = props;
+    const { token, questionsLoading, questionsErr, questions, theme } = props;
 
     useEffect(() => {
         if (token != null) {
@@ -39,7 +39,7 @@ const GUI = props => {
     }
 
     return (
-        <Container style={{padding: 0, overflow: 'hidden'}}>
+        <Container isdark={theme==='DARK'} style={{padding: 0, overflow: 'hidden'}}>
             {content}
         </Container>
     );
@@ -51,6 +51,7 @@ const mapStateToProps = (state) => {
         questions: state.userQuestions.questions,
         questionsErr: state.userQuestions.error,
         questionsLoading: state.userQuestions.loading,
+        theme: state.theme
     }
 }
 

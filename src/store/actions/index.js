@@ -46,3 +46,7 @@ export {
 export {
     getTestCase
 } from './getTestCase';
+
+export {
+    switchTheme
+} from './theme';

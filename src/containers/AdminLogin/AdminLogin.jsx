@@ -3,6 +3,7 @@ import { Form, Button, Card, Spinner, Alert } from 'react-bootstrap';
 import { Container } from './AdminLoginStyle';
 import { Redirect, withRouter } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
+import ThemeSwitch from '../../components/UI/switch/ThemeSwitch';
 
 import * as actions from '../../store/actions';
 
@@ -25,7 +26,7 @@ const AdminLogin = props => {
 
     const dispatch = useDispatch()
     const onAuthUser = (userData, adminType) => dispatch(actions.authSuperAdmin(userData, adminType));
-    const { loading, error, isAuthenticated } = props;
+    const { loading, error, isAuthenticated, theme } = props;
 
     const inputChangeHandler = (event, index) => {
         const updatedForm = [...formElements];
@@ -47,8 +48,12 @@ const AdminLogin = props => {
         return <Redirect to={path} />
     }
     return (
-        <Container>
-            <Card style={{ width: '400px', margin: '20px' }}>
+        <Container isdark={theme==='DARK'}>
+            
+            <ThemeSwitch checked={theme=== 'LIGHT'} onCheck={() => dispatch(actions.switchTheme())}/>
+            <Card style={{ width: '400px', margin: '20px',
+                filter: `invert(${theme==='DARK' ? 0.9 : 0}) hue-rotate(${theme==='DARK' ? '180deg' : '0deg'})` }}
+            >
                 <Card.Body>
                     <Card.Title className="text-center" style={{ fontSize: '26px' }}>Login</Card.Title>
                     {error != null ?
@@ -91,7 +96,8 @@ const AdminLogin = props => {
 const mapStateToProps = (state) => ({
     error: state.adminAuth.error,
     loading: state.adminAuth.loading,
-    isAuthenticated: state.adminAuth.isAuthenticated
+    isAuthenticated: state.adminAuth.isAuthenticated,
+    theme: state.theme
 })
 
 export default connect(mapStateToProps)(withRouter(AdminLogin));

@@ -12,3 +12,8 @@ export const Span = styled.span`
     font-size: 12px;
     margin-left: 5px
 `
+export const ThemeContainer = styled.div`
+    position: absolute;
+    top: 25px; 
+    left: 100px;
+`

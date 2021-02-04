@@ -9,7 +9,7 @@ import * as actions from '../../store/actions';
 
 const QAdminPanel = (props) => {
     const dispatch = useDispatch();
-    const { token, data, loading, error } = props;
+    const { token, data, loading, error, theme } = props;
 
     useEffect(() => {
         dispatch(actions.getQuestions(token));
@@ -23,7 +23,7 @@ const QAdminPanel = (props) => {
         props.history.push({
             pathname: '/question/edit',
             state: { questionToEdit: question }
-          });
+        });
     }
     const onDeleteClick = (event, el) => {
         if (window.confirm("Are you sure you want to delete?")) {
@@ -59,24 +59,30 @@ const QAdminPanel = (props) => {
 
     return (
         <>
-            <Container>
-                <Row>
-                    <Col>
-                        <ListContainer>
-                            <Header>
-                                <h1>
-                                    Questions
+            <div style={{
+                width: '100%', height: '100%',
+                backgroundColor: theme === 'DARK' ? '#0d1117' : '#2a5496'
+            }}>
+                <Container>
+                    <Row>
+                        <Col>
+                            <ListContainer isdark={theme==='DARK'}>
+                                <Header>
+                                    <h1>
+                                        Questions
                                 </h1>
-                                <AddNewBtn color="#2da829" style={{ fontWeight: 'bold' }} onClick={onAddClick}>Add New </AddNewBtn>
-                            </Header>
-                            {error && <Alert variant="danger">{error}</Alert>}
-                            {loading ? <Spinner animation="border" /> : null}
-                            {dataList}
-                        </ListContainer>
-                    </Col>
-                </Row>
+                                    <AddNewBtn color="#2da829" style={{ fontWeight: 'bold' }} onClick={onAddClick}>Add New </AddNewBtn>
+                                </Header>
+                                {error && <Alert variant="danger">{error}</Alert>}
+                                {loading ? <Spinner animation="border" /> : null}
+                                {dataList}
+                            </ListContainer>
+                        </Col>
+                    </Row>
 
-            </Container>
+                </Container>
+            </div>
+
         </>
     );
 }
@@ -86,6 +92,7 @@ const mapStateToProps = (state) => ({
     data: state.questions.data,
     loading: state.questions.loading,
     error: state.questions.error,
+    theme: state.theme
 })
 
 export default connect(mapStateToProps)(withRouter(QAdminPanel));

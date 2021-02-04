@@ -6,7 +6,7 @@ export const MainContainer = styled.div`
     align-items: center;
     width: 100%;
     height: 100vh;
-    background-color: #2a5496;
+    background-color: ${props => props.isdark ? '#0d1117' : '#2a5496'};
 `
 
 export const GuiContainer = styled.div`

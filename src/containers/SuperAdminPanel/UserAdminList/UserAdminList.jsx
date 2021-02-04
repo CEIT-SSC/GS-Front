@@ -12,7 +12,7 @@ const UserAdminList = (props) => {
     const dispatch = useDispatch();
     const [showForm, setShowForm] = useState(false);
     const [userToEdit, setUserToEdit] = useState(null);
-    const { token, data, loading, error, dataType } = props;
+    const { token, data, loading, error, dataType, theme } = props;
 
     useEffect(() => {
         const type = props.match.params.dataType;
@@ -63,6 +63,9 @@ const UserAdminList = (props) => {
     return (
         <>
             <Modal
+                style={{
+                    filter: `invert(${theme === 'DARK' ? 0.9 : 0}) hue-rotate(${theme === 'DARK' ? '180deg' : '0deg'})`
+                }}
                 show={showForm}
                 onHide={() => { setShowForm(false); setUserToEdit(null); }}
                 aria-labelledby="example-modal-sizes-title-lg">
@@ -72,30 +75,35 @@ const UserAdminList = (props) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  
+
                     <EditForm onSuccess={() => setShowForm(false)} userToEdit={userToEdit} ></EditForm>
-                </Modal.Body> 
+                </Modal.Body>
 
             </Modal>
+            <div style={{
+                width: '100%', height: '100%',
+                backgroundColor: theme === 'DARK' ? '#0d1117' : '#2a5496'
+            }}>
+                <Container isdark={theme === 'DARK'}>
+                    <Row>
+                        <Col>
+                            <ListContainer isdark={theme==='DARK'}>
+                                <Header>
+                                    <h1>
+                                        {dataType === 'user' ? 'Users' : dataType === 'QAdmin' ? 'Question Admins' : ''}
+                                    </h1>
+                                    <AddNewBtn color="#2da829" style={{ fontWeight: 'bold' }} onClick={onAddClick}>Add New </AddNewBtn>
+                                </Header>
+                                {error && <Alert variant="danger">{error}</Alert>}
+                                {loading ? <Spinner animation="border" /> : null}
+                                {dataList}
+                            </ListContainer>
+                        </Col>
+                    </Row>
 
-            <Container>
-                <Row>
-                    <Col>
-                        <ListContainer>
-                            <Header>
-                                <h1>
-                                    {dataType === 'user' ? 'Users' : dataType === 'QAdmin' ? 'Question Admins' : ''}
-                                </h1>
-                                <AddNewBtn color="#2da829" style={{ fontWeight: 'bold' }} onClick={onAddClick}>Add New </AddNewBtn>
-                            </Header>
-                            {error && <Alert variant="danger">{error}</Alert>}
-                            {loading ? <Spinner animation="border" /> : null}
-                            {dataList}
-                        </ListContainer>
-                    </Col>
-                </Row>
+                </Container>
+            </div>
 
-            </Container>
         </>
     );
 }
@@ -106,6 +114,7 @@ const mapStateToProps = (state) => ({
     dataType: state.userAdminCRUD.dataType,
     loading: state.userAdminCRUD.loading,
     error: state.userAdminCRUD.error,
+    theme: state.theme
 })
 
 export default connect(mapStateToProps)(withRouter(UserAdminList));

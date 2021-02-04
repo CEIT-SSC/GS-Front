@@ -24,8 +24,6 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
     const dispatch = useDispatch();
     let selectedQuestion=null ; 
     if(selectedQIndex>=0 && selectedQIndex<questions.length) selectedQuestion=questions[selectedQIndex];
-    console.log(selectedQIndex);
-    console.log(selectedQuestion);
 
     useEffect(() => {
         dispatch(actions.getTestCase(selectedQuestion._id, selectedQuestion.name, token));

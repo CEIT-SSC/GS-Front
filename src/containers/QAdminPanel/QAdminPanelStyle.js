@@ -6,7 +6,7 @@ export const Container = styled.div`
     flex-wrap:wrap;
     align-items: center;
     justify-content: center;
-    background-color: #2a5496;
+    background-color: ${props => props.isdark ? '#0d1117' : '#2a5496'};
     width: 100%;
     min-height: 100vh;
     @media(max-width: 768px){
@@ -30,6 +30,7 @@ export const MainButton  = styled(Link) `
     display: flex;
     justify-content: center;
     align-items: center;
+    filter: invert(${props => props.isdark ? 0.9 : 0}) hue-rotate(${props => props.isdark ? '180deg' : '0deg'});
     transition: all 0.3s;
     &:hover{
         text-decoration: none;

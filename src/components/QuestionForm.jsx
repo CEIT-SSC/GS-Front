@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Form, Button, Spinner, Container, Card, Row, Col, Alert } from 'react-bootstrap';
 
 const QuestionForm = (props) => {
 
-    const {edit, loading, error, formValues, setFormValues, examples, setExamples, onSubmitHandler } = props;
-    
+    const { edit, loading, error, formValues, setFormValues, 
+        examples, setExamples, onSubmitHandler, theme } = props;
+
     const [formElements] = useState([
         {
             type: 'text',
@@ -77,73 +79,83 @@ const QuestionForm = (props) => {
     }
 
     return (
-        <Container style={{ maxWidth: '700px', margin: '50px auto' }}>
-            <Row>
-                <Col>
-                    <Card>
-                        <Form style={{ padding: '20px' }}
-                            onSubmit={onSubmitHandler}
-                        >
-                            {error && <Alert variant="danger">{error}</Alert>}
-                            {formElements.map((element, index) => (
-                                <Form.Group key={index}>
-                                    <Form.Label>{element.label}</Form.Label>
-                                    <Form.Control
-                                        type={element.type}
-                                        as={element.type === 'textarea' ? 'textarea' : element.type === 'select' ? 'select' : 'input'}
-                                        label={element.label}
-                                        placeholder={element.placeholder}
-                                        value={element.type === 'file' ? formValues[index].value : formValues[index]}
-                                        onChange={(event) => inputChangeHandler(event, index)}
-                                        required={element.required}>
-                                            {element.options ? 
-                                            element.options.map(el => (
-                                                <option key={el.label} value={el.value}>{el.label}</option>
-                                            )) : null}
-                                        </Form.Control>
-                                </Form.Group>
-                            ))}
-                            <Form.Group>
-                                {examples.map((element, index) => (
+        <div style={{
+            width: '100%', minHeight: '100vh',
+            backgroundColor: theme === 'DARK' ? '#0d1117' : '#2a5496'
+        }}>
+            <Container style={{ maxWidth: '700px' }}>
+                <Row>
+                    <Col>
+                        <Card style={{
+                            margin: '50px auto',
+                            filter: `invert(${theme==='DARK' ? 0.9 : 0}) hue-rotate(${theme==='DARK' ? '180deg' : '0deg'})`
+                        }}>
+                            <Form style={{ padding: '20px' }}
+                                onSubmit={onSubmitHandler}
+                            >
+                                {error && <Alert variant="danger">{error}</Alert>}
+                                {formElements.map((element, index) => (
                                     <Form.Group key={index}>
-                                    <Form.Label>{'example ' + (index + 1)}</Form.Label>
-                                        <Row>
-                                            <Col>
-                                                <Form.Control
-                                                    type={'text'}
-                                                    placeholder={'input'}
-                                                    as={'textarea'}
-                                                    value={element.input}
-                                                    onChange={(event) => exampleChangeHandler(event, index, 'input')}
-                                                    required={true}></Form.Control>
-                                            </Col>
-                                            <Col>
-                                                <Form.Control
-                                                    type={'text'}
-                                                    placeholder={'ouput'}
-                                                    as={'textarea'}
-                                                    value={element.output}
-                                                    onChange={(event) => exampleChangeHandler(event, index, 'output')}
-                                                    required={true}></Form.Control>
-                                            </Col>
-                                        </Row>
+                                        <Form.Label>{element.label}</Form.Label>
+                                        <Form.Control
+                                            type={element.type}
+                                            as={element.type === 'textarea' ? 'textarea' : element.type === 'select' ? 'select' : 'input'}
+                                            label={element.label}
+                                            placeholder={element.placeholder}
+                                            value={element.type === 'file' ? formValues[index].value : formValues[index]}
+                                            onChange={(event) => inputChangeHandler(event, index)}
+                                            required={element.required}>
+                                            {element.options ?
+                                                element.options.map(el => (
+                                                    <option key={el.label} value={el.value}>{el.label}</option>
+                                                )) : null}
+                                        </Form.Control>
                                     </Form.Group>
                                 ))}
-                                <Button variant="primary" onClick={() => { setExamples([...examples, { input: '', output: '' }]) }}>Add Example</Button>
-                            </Form.Group>
+                                <Form.Group>
+                                    {examples.map((element, index) => (
+                                        <Form.Group key={index}>
+                                            <Form.Label>{'example ' + (index + 1)}</Form.Label>
+                                            <Row>
+                                                <Col>
+                                                    <Form.Control
+                                                        type={'text'}
+                                                        placeholder={'input'}
+                                                        as={'textarea'}
+                                                        value={element.input}
+                                                        onChange={(event) => exampleChangeHandler(event, index, 'input')}
+                                                        required={true}></Form.Control>
+                                                </Col>
+                                                <Col>
+                                                    <Form.Control
+                                                        type={'text'}
+                                                        placeholder={'ouput'}
+                                                        as={'textarea'}
+                                                        value={element.output}
+                                                        onChange={(event) => exampleChangeHandler(event, index, 'output')}
+                                                        required={true}></Form.Control>
+                                                </Col>
+                                            </Row>
+                                        </Form.Group>
+                                    ))}
+                                    <Button variant="primary" onClick={() => { setExamples([...examples, { input: '', output: '' }]) }}>Add Example</Button>
+                                </Form.Group>
 
-                            <Button variant="success" type="submit" block>
-                                {loading ? <Spinner animation="border" /> : 'Submit'}
-                            </Button>
-                        </Form>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
-
+                                <Button variant="success" type="submit" block>
+                                    {loading ? <Spinner animation="border" /> : 'Submit'}
+                                </Button>
+                            </Form>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
 
     )
 }
 
+const mapStateToProps = (state) => ({
+    theme: state.theme
+})
 
-export default QuestionForm;
+export default connect(mapStateToProps)(QuestionForm);
