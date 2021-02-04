@@ -20,6 +20,9 @@ export const QTableTitle = styled.div`
     margin-bottom: 5px;
     border-bottom: 1px solid #ddd;
     text-align: right;
+    height: 77px;
+    display: flex;
+    align-items: center;
 `
 export const QTableEl = styled.div`
     cursor: pointer;

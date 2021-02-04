@@ -116,7 +116,7 @@ const EditForm = (props) => {
                 </Form.Group>
             ))}
 
-            <Button variant="primary" type="submit" block>
+            <Button variant="success" type="submit" block>
                 {loading ? <Spinner animation="border"/> : 'Submit'}
             </Button>
         </Form>

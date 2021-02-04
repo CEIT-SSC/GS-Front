@@ -3,7 +3,7 @@ import { Container as BSContainer } from 'react-bootstrap';
 
 export const Container = styled(BSContainer)`
     background-color: white;
-    height: 80%;
+    height: 85%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,6 +12,6 @@ export const Container = styled(BSContainer)`
         max-width: 95%;
     };
     @media (min-width: 992px){
-        max-width: 800px;
+        max-width: 950px;
     }
 `;

@@ -76,7 +76,7 @@ const AdminLogin = props => {
                                     required></Form.Control>
                             </Form.Group>
                         ))}
-                        <Button variant="primary" type="submit" block>
+                        <Button variant="success" type="submit" block>
                             {loading ? <Spinner animation="border" style={{ height: '23px', width: '23px' }} /> : 'Submit'}
                         </Button>
                     </Form>

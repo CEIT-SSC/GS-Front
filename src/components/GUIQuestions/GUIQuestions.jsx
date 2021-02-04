@@ -112,6 +112,7 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                             <Form.Group as={Row}>
                                 <Form.Label as={Col} xs={3}>فایل کد</Form.Label>
                                 <Form.File as={Col} xs={9}
+                                    style={{fontSize: '12px'}}
                                     onChange={(event) => setCode(event.target.files[0])}
                                     required />
                             </Form.Group>
@@ -119,6 +120,7 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                             <Form.Group as={Row}>
                                 <Form.Label as={Col} xs={3}>فایل خروجی</Form.Label>
                                 <Form.File as={Col} xs={9} accept=".txt"
+                                    style={{fontSize: '12px'}}
                                     onChange={(event) => setOutput(event.target.files[0])}
                                     required />
                             </Form.Group>

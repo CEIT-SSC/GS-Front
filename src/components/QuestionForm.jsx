@@ -132,7 +132,7 @@ const QuestionForm = (props) => {
                                 <Button variant="primary" onClick={() => { setExamples([...examples, { input: '', output: '' }]) }}>Add Example</Button>
                             </Form.Group>
 
-                            <Button variant="primary" type="submit" block>
+                            <Button variant="success" type="submit" block>
                                 {loading ? <Spinner animation="border" /> : 'Submit'}
                             </Button>
                         </Form>

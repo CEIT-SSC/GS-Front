@@ -26,7 +26,7 @@ const SuperAdminPanel = props => {
                     <Button
                         onClick={handleLogout}
                         style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
-                        variant="outline-primary">Log Out</Button>
+                        variant="outline-danger">Log Out</Button>
                 </Navbar>
                 <MainButton to="/list/superadmin/QAdmin"> Question Admins </MainButton>
                 <MainButton to="/list/superadmin/user"> Users </MainButton>

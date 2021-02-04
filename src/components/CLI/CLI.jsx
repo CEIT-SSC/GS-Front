@@ -289,7 +289,7 @@ const CLI = props => {
                     style={{ width: '100%', height: '80%', maxWidth: '900px', maxHeight: '450px' }}
                     ref={terminal}
                     commands={commands}
-                    welcomeMessage={'Welcome to General Shit event :)\nRun help to see the commands or switch to GUI.'}
+                    welcomeMessage={'Welcome to General Skills event :)\nRun help to see the commands or switch to GUI.'}
                     promptLabel={token ? `${username}@GS:~$` : 'me@GS:~$'}
                 />
             </Container>
