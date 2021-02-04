@@ -34,10 +34,7 @@ export const authUser = (userData) => {
         dispatch(authStart());
         axios.post("/user/login", userData)
             .then(response => {
-                console.log(response);
                 dispatch(authSuccess(response.data.token, response.data.user.studentNumber));
-                console.log(response.data.token);
-                
             })
             .catch(error => {
                 dispatch(authFail(error));

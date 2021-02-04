@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import Terminal from 'react-console-emulator';
-import { Container, Row, Col } from 'react-bootstrap';
-import download from 'downloadjs';
-
+import { Container } from 'react-bootstrap';
 
 import * as actions from '../../store/actions';
 
@@ -51,8 +49,8 @@ const CLI = props => {
         }
         else {
             const qel=questions[index];
-            console.log(qel);
-            dispatch(actions.getTestCase(qel._id,qel.name,token));
+            // console.log(qel);
+            dispatch(actions.getTestCase(qel._id,qel.name,token, true));
         }
         setTestcaseNum(index);
     }

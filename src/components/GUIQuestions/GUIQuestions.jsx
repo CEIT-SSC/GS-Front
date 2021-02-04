@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Row, Col, Form, Button, Alert, Spinner } from 'react-bootstrap';
-
+import download from 'downloadjs';
 
 import * as actions from '../../store/actions';
 import {
     Container, QTableContainer, QTableTitle, QTableEl, State,
     SQContainer, SQTitle, SQBody, SQExample, SQHeader, SubmitTitle,
-     Button as LinkButton, ButtonContainer
+    Button as LinkButton, ButtonContainer
 } from './GUIQuestionsStyle';
 
-const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error, success, token , testCase }) => {
+const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
+    loading, error, success, token, testCase,
+    testCaseSuccess, testCaseError }) => {
 
     const [code, setCode] = useState(null);
     const [output, setOutput] = useState(null);
@@ -20,15 +22,18 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
 
     const dispatch = useDispatch();
     const selectedQuestion = questions[selectedQIndex];
-    
+
+    useEffect(() => {
+        dispatch(actions.getTestCase(selectedQuestion._id, selectedQuestion.name, token));
+    }, [selectedQIndex])
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
         const data = new FormData();
-        data.append('questionID', questions[selectedQIndex]._id);
+        data.append('questionID', selectedQuestion._id);
         data.append('output', output);
         data.append('code', code);
-        if(output.name.split('.')[1] !== 'txt'){
+        if (output.name.split('.')[1] !== 'txt') {
             alert('upload a text file as your output!');
         } else {
             dispatch(actions.uploadFile(data, token));
@@ -39,7 +44,7 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
 
     const dlTestcaseHandler = (event) => {
         event.preventDefault();
-        dispatch(actions.getTestCase(questions[selectedQIndex]._id,questions[selectedQIndex].name, token));
+        download(testCase, selectedQuestion.name + "tescase.txt", "text/text");
     }
 
     const clickHandler = (index) => {
@@ -47,7 +52,7 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
         setShowSuccess(false);
         qClickHandler(index);
     }
-    
+
 
     return (
         <Container>
@@ -57,7 +62,7 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
                         <QTableTitle>سوالات</QTableTitle>
                         {questions.map((q, index) => (
                             <QTableEl key={q._id}
-                                onClick={() => {clickHandler(index)}}
+                                onClick={() => { clickHandler(index) }}
                                 active={index === selectedQIndex}>
                                 <div>{q.name}</div>
                                 <State state={q.state} />
@@ -81,11 +86,14 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex, loading, error
                                 <SQExample>{el.output}</SQExample>
                             </div>
                         ))}
-                        <Button onClick={(event)=>{dlTestcaseHandler(event)}}
-                        style={{marginTop:'10px', width:'100%'}}
+                        {testCaseSuccess ? <Button onClick={(event) => { dlTestcaseHandler(event) }}
+                            style={{ marginTop: '10px', width: '100%' }}
                         >
                             تست کیس منحصر به خود را دانلود کنید
                         </Button>
+                            : testCaseError ?
+                                <Alert variant="danger">{testCaseError.message}</Alert>
+                                : null}
                         <SubmitTitle>ارسال پاسخ</SubmitTitle>
                         {(success && showSuccess) && <Alert variant="success">Question submitted successfully</Alert>}
                         {(error && showError) && <Alert variant="danger">{error.message}</Alert>}
@@ -122,7 +130,11 @@ const mapStateToProps = (state) => ({
     error: state.fileUploader.error,
     success: state.fileUploader.success,
     token: state.userAuth.token,
-    testCase: state.getTestCase.testCase
+    testCase: state.getTestCase.testCase,
+    testCaseLoading: state.getTestCase.loading,
+    testCaseSuccess: state.getTestCase.success,
+    testCaseError: state.getTestCase.error,
+
 })
 
 export default connect(mapStateToProps)(GUIQuestions);
