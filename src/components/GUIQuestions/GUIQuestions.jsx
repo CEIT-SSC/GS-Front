@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Row, Col, Form, Button, Alert, Spinner } from 'react-bootstrap';
-import {FaHourglassStart} from 'react-icons/fa';
+import { FaHourglassStart } from 'react-icons/fa';
 import download from 'downloadjs';
 
 import * as actions from '../../store/actions';
@@ -22,11 +22,13 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
     const [showSuccess, setShowSuccess] = useState(true);
 
     const dispatch = useDispatch();
-    let selectedQuestion=null ; 
-    if(questions && questions.length > 0 && selectedQIndex>=0 && selectedQIndex<questions.length) selectedQuestion=questions[selectedQIndex];
+    let selectedQuestion = null;
+    if (questions && questions.length > 0 && selectedQIndex >= 0 && selectedQIndex < questions.length) selectedQuestion = questions[selectedQIndex];
 
     useEffect(() => {
-        dispatch(actions.getTestCase(selectedQuestion._id, selectedQuestion.name, token));
+        if (selectedQuestion) {
+            dispatch(actions.getTestCase(selectedQuestion._id, selectedQuestion.name, token));
+        }
     }, [selectedQIndex])
 
     const onSubmitHandler = (event) => {
@@ -62,16 +64,16 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                 <Col md={4}>
                     <QTableContainer>
                         <QTableTitle>سوالات</QTableTitle>
-                        {questions.length===0 ? <div 
-                        style={{direction:'rtl', paddingRight:'2px'}}>هنوز سوالی تعریف نشده</div>:
-                        questions.map((q, index) => (
-                            <QTableEl key={q._id}
-                                onClick={() => { clickHandler(index) }}
-                                active={index === selectedQIndex}>
-                                <div>{q.name}</div>
-                                <State state={q.state} />
-                            </QTableEl>
-                        ))}
+                        {questions.length === 0 ? <div
+                            style={{ direction: 'rtl', paddingRight: '2px' }}>هنوز سوالی تعریف نشده</div> :
+                            questions.map((q, index) => (
+                                <QTableEl key={q._id}
+                                    onClick={() => { clickHandler(index) }}
+                                    active={index === selectedQIndex}>
+                                    <div>{q.name}</div>
+                                    <State state={q.state} />
+                                </QTableEl>
+                            ))}
                         <ButtonContainer>
                             <LinkButton to="/scoreboard">جدول امتیازها</LinkButton>
                         </ButtonContainer>
@@ -79,54 +81,56 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
 
                 </Col>
                 <Col md={8}>
-                    {selectedQuestion===null ?  <div style={{width:'100%' , fontSize:'300px',heigh:'100%',alignItems:'center',
-                justifyContent:'center',display:'flex' , color:'#80808045',paddingTop:'50%',paddingBottom:'10%'}}>
+                    {selectedQuestion === null ? <div style={{
+                        width: '100%', fontSize: '300px', heigh: '100%', alignItems: 'center',
+                        justifyContent: 'center', display: 'flex', color: '#80808045', paddingTop: '50%', paddingBottom: '10%'
+                    }}>
                         <FaHourglassStart></FaHourglassStart>
-                    </div>:<SQContainer>
-                        <SQTitle>{selectedQuestion.name}</SQTitle>
-                        <SQBody>{selectedQuestion.body}</SQBody>
-                        {selectedQuestion.examples.map((el, index) => (
-                            <div key={index}>
-                                <SQHeader>ورودی {index + 1}</SQHeader>
-                                <SQExample>{el.input}</SQExample>
-                                <SQHeader>خروجی {index + 1}</SQHeader>
-                                <SQExample>{el.output}</SQExample>
-                            </div>
-                        ))}
-                        {testCaseSuccess ? <Button onClick={(event) => { dlTestcaseHandler(event) }}
-                            style={{ marginTop: '10px', width: '100%' }}
-                        >
-                            تست کیس منحصر به خود را دانلود کنید
+                    </div> : <SQContainer>
+                            <SQTitle>{selectedQuestion.name}</SQTitle>
+                            <SQBody>{selectedQuestion.body}</SQBody>
+                            {selectedQuestion.examples.map((el, index) => (
+                                <div key={index}>
+                                    <SQHeader>ورودی {index + 1}</SQHeader>
+                                    <SQExample>{el.input}</SQExample>
+                                    <SQHeader>خروجی {index + 1}</SQHeader>
+                                    <SQExample>{el.output}</SQExample>
+                                </div>
+                            ))}
+                            {testCaseSuccess ? <Button onClick={(event) => { dlTestcaseHandler(event) }}
+                                style={{ marginTop: '10px', width: '100%' }}
+                            >
+                                تست کیس منحصر به خود را دانلود کنید
                         </Button>
-                            : testCaseError ?
-                                <Alert variant="danger">{testCaseError}</Alert>
-                                : null}
-                        <SubmitTitle>ارسال پاسخ</SubmitTitle>
-                        {(success && showSuccess) && <Alert variant="success">Question submitted successfully</Alert>}
-                        {(error && showError) && <Alert variant="danger">{error}</Alert>}
-                        <Form style={{ direction: 'rtl', textAlign: 'right' }}
-                            onSubmit={onSubmitHandler}
-                        >
-                            <Form.Group as={Row}>
-                                <Form.Label as={Col} xs={3}>فایل کد</Form.Label>
-                                <Form.File as={Col} xs={9}
-                                    style={{fontSize: '12px'}}
-                                    onChange={(event) => setCode(event.target.files[0])}
-                                    required />
-                            </Form.Group>
+                                : testCaseError ?
+                                    <Alert variant="danger">{testCaseError}</Alert>
+                                    : null}
+                            <SubmitTitle>ارسال پاسخ</SubmitTitle>
+                            {(success && showSuccess) && <Alert variant="success">Question submitted successfully</Alert>}
+                            {(error && showError) && <Alert variant="danger">{error}</Alert>}
+                            <Form style={{ direction: 'rtl', textAlign: 'right' }}
+                                onSubmit={onSubmitHandler}
+                            >
+                                <Form.Group as={Row}>
+                                    <Form.Label as={Col} xs={3}>فایل کد</Form.Label>
+                                    <Form.File as={Col} xs={9}
+                                        style={{ fontSize: '12px' }}
+                                        onChange={(event) => setCode(event.target.files[0])}
+                                        required />
+                                </Form.Group>
 
-                            <Form.Group as={Row}>
-                                <Form.Label as={Col} xs={3}>فایل خروجی</Form.Label>
-                                <Form.File as={Col} xs={9} accept=".txt"
-                                    style={{fontSize: '12px'}}
-                                    onChange={(event) => setOutput(event.target.files[0])}
-                                    required />
-                            </Form.Group>
-                            <Button variant="warning" type="submit" style={{ width: '150px', fontWeight: 'bold', color: '#333' }}>
-                                {loading ? <Spinner animation="border" style={{ height: '23px', width: '23px' }} /> : 'ارسال پاسخ'}
-                            </Button>
-                        </Form>
-                    </SQContainer>}
+                                <Form.Group as={Row}>
+                                    <Form.Label as={Col} xs={3}>فایل خروجی</Form.Label>
+                                    <Form.File as={Col} xs={9} accept=".txt"
+                                        style={{ fontSize: '12px' }}
+                                        onChange={(event) => setOutput(event.target.files[0])}
+                                        required />
+                                </Form.Group>
+                                <Button variant="warning" type="submit" style={{ width: '150px', fontWeight: 'bold', color: '#333' }}>
+                                    {loading ? <Spinner animation="border" style={{ height: '23px', width: '23px' }} /> : 'ارسال پاسخ'}
+                                </Button>
+                            </Form>
+                        </SQContainer>}
                 </Col>
 
             </Row>
