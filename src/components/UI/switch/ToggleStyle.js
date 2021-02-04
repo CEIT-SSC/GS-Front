@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
     z-index: 99;
     position: absolute; 
-    top: 25px; 
+    top: 17px; 
     left: 25px;
 `
 export const Span = styled.span`
@@ -13,7 +13,8 @@ export const Span = styled.span`
     margin-left: 5px
 `
 export const ThemeContainer = styled.div`
+    z-index: 99;
     position: absolute;
-    top: 25px; 
+    top: 17px; 
     left: 100px;
 `
