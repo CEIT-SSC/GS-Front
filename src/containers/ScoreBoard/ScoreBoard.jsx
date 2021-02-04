@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { Table, Row, Col, Button } from 'react-bootstrap';
-import { MainContainer, ListContainer } from './ScoreBoardStyle';
+import { MainContainer, ListContainer, BackLink } from './ScoreBoardStyle';
 
 import * as actions from '../../store/actions';
 
@@ -48,6 +48,7 @@ const ScoreBoard = (props) => {
             width: '100%', height: '100%',
             backgroundColor: theme === 'DARK' ? '#0d1117' : '#2a5496'
         }}>
+            <BackLink to="/">Back to Home</BackLink>
             <MainContainer>
                 <Row>
                     <Col>
