@@ -46,16 +46,20 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
         setShowSuccess(true);
     }
 
-    const dlTestcaseHandler = (event) => {
+    const dlTestcaseHandler = (event, selectDownload) => {
         event.preventDefault();
-        download(testCase, selectedQuestion.name + "tescase.txt", "text/text");
+        console.log(selectedQuestion);
+        dispatch(actions.getTestCase(selectedQuestion._id,selectedQuestion.name,token,selectDownload,false));
     }
 
-    const clickHandler = (index) => {
+    const clickHandler = (event,index) => {
+        event.preventDefault();
         setShowError(false);
         setShowSuccess(false);
         qClickHandler(index);
+        if(selectedQuestion.isWeb) dlTestcaseHandler(event,false);
     }
+    
 
 
     return (
@@ -68,7 +72,7 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                             style={{ direction: 'rtl', paddingRight: '2px', textAlign: 'right' }}>هنوز سوالی تعریف نشده</div> :
                             questions.map((q, index) => (
                                 <QTableEl key={q._id}
-                                    onClick={() => { clickHandler(index) }}
+                                    onClick={(event) => { clickHandler(event,index) }}
                                     active={index === selectedQIndex}>
                                     <div>{q.name}</div>
                                     <State state={q.state} />
@@ -88,7 +92,12 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                         <FaHourglassStart></FaHourglassStart>
                     </div> : <SQContainer>
                             <SQTitle>{selectedQuestion.name}</SQTitle>
-                            <SQBody>{selectedQuestion.body}</SQBody>
+                            <SQBody>
+                                {selectedQuestion.body}
+                                <div dangerouslySetInnerHTML={{__html:testCase}}
+                                style={{display: selectedQuestion.isWeb ? 'inline-block' : 'none'}}>
+                                </div>
+                            </SQBody>
                             {selectedQuestion.examples.map((el, index) => (
                                 <div key={index}>
                                     <SQHeader>ورودی {index + 1}</SQHeader>
@@ -97,8 +106,8 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                                     <SQExample>{el.output}</SQExample>
                                 </div>
                             ))}
-                            {testCaseSuccess ? <Button onClick={(event) => { dlTestcaseHandler(event) }}
-                                style={{ marginTop: '10px', width: '100%' }}
+                            {testCaseSuccess ? <Button onClick={(event) => { dlTestcaseHandler(event,true) }}
+                                style={{ marginTop: '10px', width: '100%', display: selectedQuestion.isWeb ? 'none' : 'block' }}
                             >
                                 تست کیس منحصر به خود را دانلود کنید
                         </Button>

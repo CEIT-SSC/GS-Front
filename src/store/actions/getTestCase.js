@@ -23,20 +23,31 @@ export const testCaseGetFail = (error) => {
     }
 }
 
-export const getTestCase = (id ,name, token, dirDownload) => {
+export const getTestCase = (id ,name, token, dirDownload , html) => {
     return (dispatch) => {
         const sendReq = async () => {
             try {
                 dispatch(testCaseGetStart());
-                const response = await axios.get("/question/" +  id + "/testcase" , {
+                let response=null;
+                response = await axios.get("/question/" +  id + "/testcase" , {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
                 console.log(response);
                 const testCase = response.data;
-                if(dirDownload) {
-                    download(testCase,name+"tescase.txt","text/text");
+                if(dirDownload && html==false) {
+                    download(testCase,name+"testcase.txt","text/text");
+                }
+                else if(dirDownload && html){
+                    const blob= new Blob([testCase] , {type: 'text/html;charset=UTF-8'});
+                    const url = window.URL.createObjectURL(blob);
+                    console.log(url);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = name+"testcase.html";
+                    a.click();
+                    
                 }
                 dispatch(testCaseGetSuccess(testCase));
             }

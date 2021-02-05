@@ -50,7 +50,7 @@ const CLI = props => {
         else {
             const qel=questions[index];
             // console.log(qel);
-            dispatch(actions.getTestCase(qel._id,qel.name,token, true));
+            dispatch(actions.getTestCase(qel._id,qel.name,token, true, qel.isWeb));
         }
         setTestcaseNum(index);
     }
