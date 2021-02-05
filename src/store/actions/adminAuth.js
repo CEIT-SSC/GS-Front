@@ -50,7 +50,7 @@ export const logoutSuperAdmin = (token, adminType) => {
     return dispatch => {
         let url = adminType === 'Question Admin' ? '/questionadmin/me/logout' : '/superarea/logout';
         try {   
-            axios.post(url, {
+            axios.post(url, null, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -69,7 +69,7 @@ export const userSignUp = (userData) =>{
 export const logoutUser = (token) => {
     return dispatch => {
         try {
-            axios.post('/user/me/logout', {
+            axios.post('/user/me/logout', null ,{
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
