@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+import * as actions from './store/actions';
 import Home from './containers/Home/Home';
 import AdminLogin from './containers/AdminLogin/AdminLogin';
 import SuperAdminPanel from './containers/SuperAdminPanel/SuperAdminPanel';
@@ -12,6 +14,16 @@ import EditQuestion from './containers/Questions/EditQuestion';
 import ScoreBoard from './containers/ScoreBoard/ScoreBoard';
 
 const App = () => {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(localStorage.getItem('theme') === 'DARK'){
+      dispatch(actions.switchTheme());  
+    }
+    dispatch(actions.autoLogin());
+  }, [])
+
   return (
     <Switch>
       <Route path="/" exact component={Home} />
