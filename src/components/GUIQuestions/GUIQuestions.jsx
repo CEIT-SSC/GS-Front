@@ -48,7 +48,6 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
 
     const dlTestcaseHandler = (event, selectDownload) => {
         event.preventDefault();
-        console.log(selectedQuestion);
         dispatch(actions.getTestCase(selectedQuestion._id, selectedQuestion.name, token, selectDownload, false));
     }
 

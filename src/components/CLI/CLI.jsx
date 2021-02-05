@@ -49,7 +49,6 @@ const CLI = props => {
         }
         else {
             const qel=questions[index];
-            // console.log(qel);
             dispatch(actions.getTestCase(qel._id,qel.name,token, true, qel.isWeb));
         }
         setTestcaseNum(index);
@@ -75,7 +74,6 @@ const CLI = props => {
             fn: function (arg) {
                 setQToSubmit(arg);
                 setFile(null);
-                console.log(file);
                 inputRef.current.click();
             }
         },
@@ -250,13 +248,11 @@ const CLI = props => {
             scores.newbies.forEach((el,index) => {
                 terminal.current.pushToStdout("Rank number "+(index+1)+ " :");
                 terminal.current.pushToStdout("StudentNumber: " +el.studentNumber + " Penalty: " + el.penalty + " Score: " + el.score);
-                console.log(el);
             });
             terminal.current.pushToStdout("Elders:");
             scores.notNoob.forEach((el,index) => {
                 terminal.current.pushToStdout("Rank number "+(index+1)+ " :");
                 terminal.current.pushToStdout("StudentNumber: " +el.studentNumber + " Penalty: " + el.penalty + " Score: " + el.score);
-                console.log(el);
             });
         }
     },[scoresSuccess])

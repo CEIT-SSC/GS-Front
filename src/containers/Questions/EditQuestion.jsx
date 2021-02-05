@@ -31,7 +31,6 @@ const EditQuestion = (props) => {
         bodyFormData.append('date', new Date(formValues[3]).getTime());
         bodyFormData.append('score', formValues[4]);
         if(formValues[5].value && formValues[5].value !== ''){
-            console.log(formValues[5].files[0]);
             bodyFormData.append('testGenerator', formValues[5].files[0]);
         }
         if(formValues[6].value && formValues[6].value !== ''){

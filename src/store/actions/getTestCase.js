@@ -34,7 +34,6 @@ export const getTestCase = (id ,name, token, dirDownload , html) => {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                console.log(response);
                 const testCase = response.data;
                 if(dirDownload && html==false) {
                     download(testCase,name+"testcase.txt","text/text");
@@ -42,7 +41,6 @@ export const getTestCase = (id ,name, token, dirDownload , html) => {
                 else if(dirDownload && html){
                     const blob= new Blob([testCase] , {type: 'text/html;charset=UTF-8'});
                     const url = window.URL.createObjectURL(blob);
-                    console.log(url);
                     const a = document.createElement('a');
                     a.href = url;
                     a.download = name+"testcase.html";

@@ -24,7 +24,6 @@ const userSuccess = (data, dataType) => (
 
 export const getUsers = (token) => dispatch => {
     dispatch(userStart());
-    console.log("kjdfdhrkh");
     axios.get("/user", {
         headers: {
             Authorization: `Bearer ${token}`
@@ -55,7 +54,6 @@ export const getQAdmins = (token) => dispatch => {
 }
 
 export const addUser = (token,userData) => dispatch => {
-    console.log("user adding");
     dispatch(userStart());
     axios.post("/user" , userData , {
         headers: {

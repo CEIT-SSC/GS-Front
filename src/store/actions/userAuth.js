@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../api/axios';
 
+const EXPIRE_IN = 24 * 3600 * 1000;
 
 export const authStart = () => {
     return {
@@ -9,6 +10,10 @@ export const authStart = () => {
 }
 
 export const authSuccess = (token, username) => {
+    const expirationDate = new Date(new Date().getTime() + EXPIRE_IN);
+    localStorage.setItem('token', token);
+    localStorage.setItem('expirationDate', expirationDate);
+    localStorage.setItem('username', username);
     return {
         type: actionTypes.USER_AUTH_SUCCESS,
         username,
@@ -38,12 +43,8 @@ export const authUser = (userData) => {
         dispatch(authStart());
         axios.post("/user/login", userData)
             .then(response => {
-                const expirationDate = new Date(new Date().getTime() + 24 * 3600 * 1000);
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('expirationDate', expirationDate);
-                localStorage.setItem('username', response.data.user.studentNumber);
                 dispatch(authSuccess(response.data.token, response.data.user.studentNumber));
-                dispatch(checkAuthTimeout(24 * 3600 * 1000, response.data.token));
+                dispatch(checkAuthTimeout(EXPIRE_IN, response.data.token));
             })
             .catch(error => {
                 dispatch(authFail(error.response && error.response.data.error ? error.response.data.error : error.message));
@@ -56,11 +57,10 @@ export const userSignUp = (userData) =>{
         dispatch(authStart());
         axios.post("/user/" , userData)
             .then(response => {
-                console.log(response);
-                dispatch(authSuccess(response.data.token,response.data.user.studentNumber));
+                dispatch(authSuccess(response.data.token, response.data.user.studentNumber));
+                dispatch(checkAuthTimeout(EXPIRE_IN, response.data.token));
             })
             .catch(error => {
-                console.log(error.response);
                 dispatch(authFail(error.response && error.response.data.error ? error.response.data.error : error.message));
             });
     }   

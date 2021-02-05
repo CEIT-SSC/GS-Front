@@ -46,7 +46,6 @@ const EditForm = (props) => {
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
-        console.log(token);
         if (dataType === 'user') {
             if (props.userToEdit === null) {
                 const userData = {

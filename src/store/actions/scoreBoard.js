@@ -28,7 +28,6 @@ export const getScoreBoard = (scores) => {
         const sendReq = async () => {
             try {
                 const response = await axios.get("/scoreboard" );
-                console.log(response);
                 scores = response.data;
                 dispatch(scoreBoardGetSuccess(scores));
             }
