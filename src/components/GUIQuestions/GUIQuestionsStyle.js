@@ -65,7 +65,7 @@ export const SQTitle = styled.div`
     text-align: center;
 `
 
-export const SQBody = styled.p`
+export const SQBody = styled.div`
     font-size: 14px;
     padding: 10px;
     text-align: right;
