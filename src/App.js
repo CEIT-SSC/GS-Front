@@ -12,6 +12,7 @@ import Questions from './containers/Questions/Questions';
 import CreateQuestion from './containers/Questions/CreateQuestion';
 import EditQuestion from './containers/Questions/EditQuestion';
 import ScoreBoard from './containers/ScoreBoard/ScoreBoard';
+import About from './containers/About/About';
 
 const App = () => {
 
@@ -35,6 +36,7 @@ const App = () => {
       <Route path="/question/edit" component={EditQuestion} />
       <Route path="/list/superadmin/:dataType?" component ={UserAdminList} />
       <Route path="/scoreboard" component={ScoreBoard} />
+      <Route path="/about" component={About} />
     </Switch>
   );
 }
