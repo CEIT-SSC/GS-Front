@@ -73,6 +73,7 @@ export const SQBody = styled.div`
 `
 
 export const SQExample = styled.div`
+	overflow-x: auto;
     width: 100%;
     padding: 15px;
     background-color: #eee;
