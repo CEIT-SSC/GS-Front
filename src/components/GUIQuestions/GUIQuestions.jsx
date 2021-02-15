@@ -93,7 +93,8 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                             <SQTitle>{selectedQuestion.name}</SQTitle>
                             <SQBody dangerouslySetInnerHTML={{ __html: selectedQuestion.body }} />
                             {selectedQuestion.isWeb ?
-                                <SQBody dangerouslySetInnerHTML={{ __html: testCase }} /> :
+                                <iframe style={{width: '100%', height: '100%'}}
+                                    src={URL.createObjectURL(new Blob([testCase], {type: 'text/html'}))} /> :
                                 null
                             }
                             {selectedQuestion.examples.map((el, index) => (
