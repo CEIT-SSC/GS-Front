@@ -93,7 +93,9 @@ const GUIQuestions = ({ questions, qClickHandler, selectedQIndex,
                             <SQTitle>{selectedQuestion.name}</SQTitle>
                             <SQBody dangerouslySetInnerHTML={{ __html: selectedQuestion.body }} />
                             {selectedQuestion.isWeb ?
-                                <iframe style={{width: '100%', height: '100%'}}
+                                <iframe style={{width: '100%', height: '100%', fontFamily: `'iranyekan', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif`}}
                                     src={URL.createObjectURL(new Blob([testCase], {type: 'text/html'}))} /> :
                                 null
                             }
